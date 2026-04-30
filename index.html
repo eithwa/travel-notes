@@ -160,6 +160,23 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--chip);font-size:12px;color:#334155;font-weight:600}
 .day-header{padding:18px;border-radius:20px;background:linear-gradient(135deg,#eff6ff,#ecfeff);border:1px solid var(--line)}
+/* Day 卡片內的行程目錄（點擊跳到對應 stop card） */
+.day-outline{margin-top:14px;border-top:1px dashed #bfdbfe;padding-top:12px}
+.day-outline-title{font-size:13px;font-weight:700;color:#0f4c81;margin-bottom:8px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;width:100%;background:transparent;border:0;padding:4px 6px;border-radius:8px;text-align:left;font-family:inherit;transition:.12s}
+.day-outline-title:hover{background:rgba(255,255,255,.7)}
+/* 純 CSS 三角形：展開時朝下（▼），收合時旋轉為朝右（▶）；夠大才看得到方向 */
+.day-outline-toggle{display:inline-block;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid #1e40af;transition:transform .18s;flex-shrink:0;margin-right:2px}
+.day-outline.collapsed .day-outline-toggle{transform:rotate(-90deg)}
+.day-outline.collapsed .day-outline-list{display:none}
+.day-outline.collapsed{padding-bottom:0}
+.day-outline.collapsed .day-outline-title{margin-bottom:0}
+.day-outline-list{display:flex;flex-direction:column;gap:6px}
+.outline-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.7);border:1px solid #dbeafe;text-decoration:none;color:inherit;cursor:pointer;transition:.12s;font-size:14px;font-family:inherit;text-align:left}
+.outline-item:hover{background:#fff;border-color:#60a5fa;transform:translateX(2px);box-shadow:0 4px 10px rgba(37,99,235,.08)}
+.outline-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#1e40af;color:#fff;font-size:12px;font-weight:800;flex-shrink:0}
+.outline-time{font-size:12px;color:#1e3a8a;background:#dbeafe;border:1px solid #bfdbfe;padding:2px 8px;border-radius:999px;font-weight:700;flex-shrink:0;white-space:nowrap}
+.outline-name{font-weight:700;color:#0f172a;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.outline-name.muted-name{color:#94a3b8;font-weight:600;font-style:italic}
 .extra-row{background:#f8fafc;border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5}
 
 /* Edit form */
@@ -1156,6 +1173,24 @@ function makeNumberedMarker(num, total){
   });
 }
 
+// 全日路線模式下：每個 stop 對應的 Leaflet marker，
+// key = `${day.key}:${原始 idx}`（與 stop card dataset.stopid 一致），讓 hover/點擊卡片時可以反查出 marker
+let allDayStopMarkers = new Map();
+
+// 對外 helper：在「全日路線」啟用時，把指定 stop 的 marker popup 打開（並可選擇是否平移地圖）
+// dayKey 與 stopIdx 是該 stop 在 state.data 中的位置
+function openAllDayStopPopup(dayKey, stopIdx, opts){
+  if(!leafletMap) return;
+  if(!(state.mapMode === 'allDay' && state.allDayKey === dayKey)) return;
+  const marker = allDayStopMarkers.get(`${dayKey}:${stopIdx}`);
+  if(!marker) return;
+  // 已開狀態下重複 open 會閃爍；用 isPopupOpen 防呆
+  if(!marker.isPopupOpen || !marker.isPopupOpen()) marker.openPopup();
+  if(opts && opts.pan){
+    try { leafletMap.panTo(marker.getLatLng(), { animate: true, duration: 0.4 }); } catch {}
+  }
+}
+
 // 在 Leaflet 地圖上顯示一組 stops (含順序連線)
 // 回傳 { ok, count } -- ok 表示是否成功用 Leaflet 顯示
 function showStopsOnLeaflet(stops, day){
@@ -1164,13 +1199,15 @@ function showStopsOnLeaflet(stops, day){
 
   setMapMode('leaflet');
   if(leafletLayer) leafletLayer.clearLayers();
+  allDayStopMarkers.clear();
 
   const validStops = stops.map((s, idx) => ({ stop: s, idx, ll: extractLatLng(s) })).filter(x => x.ll);
   if(!validStops.length) return { ok: true, count: 0 };
 
+  const dayKey = (day && day.key) || '';
   const points = [];
   validStops.forEach((v, i) => {
-    const { stop, ll } = v;
+    const { stop, idx, ll } = v;
     const num = i + 1;
     const marker = L.marker([ll.lat, ll.lng], { icon: makeNumberedMarker(num, validStops.length) });
     const mapsLink = nonEmpty(stop.map) ? stop.map : `https://www.google.com/maps?q=${ll.lat},${ll.lng}`;
@@ -1183,6 +1220,7 @@ function showStopsOnLeaflet(stops, day){
     `);
     marker.addTo(leafletLayer);
     points.push([ll.lat, ll.lng]);
+    if(dayKey) allDayStopMarkers.set(`${dayKey}:${idx}`, marker);
   });
 
   // 順序連線 (虛線)
@@ -1698,6 +1736,28 @@ function renderDaysSubTab(container){
     header.dataset.editId = `day:${day.key}`;
     header.style.position = 'relative';
     const isAllDayActive = state.mapMode === 'allDay' && state.allDayKey === day.key;
+    // 本日行程目錄：依順序列出每個 stop（編號 + 時間 + 名稱），點擊跳到對應 stop card
+    // 折疊狀態：全域共用 state.outlineCollapsedAll（所有 day 連動，一開全開、一收全收），預設展開
+    if(typeof state.outlineCollapsedAll === 'undefined') state.outlineCollapsedAll = false;
+    const isOutlineCollapsed = !!state.outlineCollapsedAll;
+    const stopList = day.stops || [];
+    const outlineHtml = stopList.length ? `
+      <div class="day-outline${isOutlineCollapsed?' collapsed':''}">
+        <button type="button" class="day-outline-title" aria-expanded="${!isOutlineCollapsed}">
+          <span class="day-outline-toggle" aria-hidden="true"></span>
+          本日行程（${stopList.length}）
+        </button>
+        <div class="day-outline-list">
+          ${stopList.map((s, i) => {
+            const hasName = nonEmpty(s.name);
+            const name = escapeHtml(hasName ? s.name : '(未命名)');
+            const timeHtml = nonEmpty(s.time) ? `<span class="outline-time">${escapeHtml(s.time)}</span>` : '';
+            return `<button type="button" class="outline-item" data-stop-idx="${i}">
+              <span class="outline-num">${i+1}</span>${timeHtml}<span class="outline-name${hasName?'':' muted-name'}">${name}</span>
+            </button>`;
+          }).join('')}
+        </div>
+      </div>` : '';
     header.innerHTML = `
       <div class="small muted">${escapeHtml(day.label||'')}</div>
       <div style="font-size:22px;font-weight:800;margin-top:4px">${escapeHtml(day.title||'')}</div>
@@ -1706,6 +1766,7 @@ function renderDaysSubTab(container){
       <div class="actions" style="margin-top:12px">
         <button type="button" class="btn ${isAllDayActive?'':'secondary'} show-all-day-btn">${isAllDayActive ? '✓ 已顯示全日路線' : '🗺 將當日全部地點顯示在地圖上'}</button>
       </div>
+      ${outlineHtml}
     `;
     header.querySelector('.show-all-day-btn').addEventListener('click', e => {
       e.stopPropagation();
@@ -1718,6 +1779,48 @@ function renderDaysSubTab(container){
       }
       renderMapPanel();
     });
+    // 行程目錄項目：
+    //   hover  → 「全日路線」模式下，地圖對應 marker popup 自動彈出（不平移、不打斷探索）
+    //   click  → 跳出全日模式、地圖切到該地點單點視圖、stop card 卷動 + 閃光
+    header.querySelectorAll('.outline-item').forEach(el => {
+      // hover 觸發 popup（限全日模式 + 同一個 day）
+      el.addEventListener('mouseenter', () => {
+        if(state.mapMode !== 'allDay' || state.allDayKey !== day.key) return;
+        const idx = parseInt(el.dataset.stopIdx, 10);
+        openAllDayStopPopup(day.key, idx);
+      });
+      // 點擊 → 跳出全日 + 跳該地點
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        const idx = parseInt(el.dataset.stopIdx, 10);
+        const stopid = `${day.key}:${idx}`;
+        // 強制離開全日路線模式（即使 stop 沒填 map，也要退出全日；jumpToStop 內部只在 hasMap 時才 reset，所以這裡先設好）
+        state.mapMode = 'single';
+        state.allDayKey = '';
+        // jumpToStop 會做：切到地圖 tab + 該 day + 設 currentMapId（若有 map）+ renderAll + scrollIntoView + active-map
+        jumpToStop(day.key, idx);
+        // 額外加閃光提示（jumpToStop 內 renderAll 後 DOM 才重建，要等下一個 frame 才能找到新的 card 節點）
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          const card = document.querySelector(`.stop-card[data-stopid="${CSS.escape(stopid)}"]`);
+          if(!card) return;
+          card.classList.remove('flash');
+          void card.offsetWidth;
+          card.classList.add('flash');
+        }));
+      });
+    });
+    // 行程目錄折疊：直接 in-place toggle DOM + 寫回全域 state（切到其他 day 後仍維持同樣的折疊狀態）
+    const outlineTitleBtn = header.querySelector('.day-outline-title');
+    if(outlineTitleBtn){
+      outlineTitleBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const outlineEl = outlineTitleBtn.closest('.day-outline');
+        outlineEl.classList.toggle('collapsed');
+        const collapsed = outlineEl.classList.contains('collapsed');
+        outlineTitleBtn.setAttribute('aria-expanded', String(!collapsed));
+        state.outlineCollapsedAll = collapsed;
+      });
+    }
     header.appendChild(makeToolbar({
       onEdit: ()=>{ state.editing = `day:${day.key}`; renderAll(); },
       onDelete: ()=>{
