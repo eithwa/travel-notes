@@ -10,13 +10,20 @@
 :root{--bg:#f6f8fc;--card:#ffffff;--text:#18212f;--muted:#667085;--line:#e5eaf2;--chip:#eef2ff;--primary:#111827;--primary-soft:#eff6ff;--accent:#2563eb;--danger:#ef4444;--warn:#fde68a;--warn-bg:#fefce8}
 *{box-sizing:border-box}
 body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#f8fbff,#f5f7fb);color:var(--text)}
-.wrap{max-width:1360px;margin:0 auto;padding:24px}
+.wrap{max-width:1900px;margin:0 auto;padding:20px}
 
 /* Hero */
 .hero{position:relative;background:linear-gradient(135deg,#0ea5e9,#2563eb 55%,#4f46e5);color:#fff;border-radius:28px;padding:28px;box-shadow:0 12px 28px rgba(37,99,235,.16)}
 .hero-edit-btn{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0}
 .hero-edit-btn:hover{background:rgba(255,255,255,.3)}
 body:not(.edit-mode) .hero-edit-btn{display:none}
+.hero-collapse-btn{position:absolute;top:20px;right:20px;height:36px;padding:0 12px;border-radius:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.hero-collapse-btn:hover{background:rgba(255,255,255,.3)}
+.hero.collapsed{padding:18px 20px}
+.hero.collapsed .hero-content{display:none}
+.hero.collapsed h1{margin:0;font-size:24px;padding-right:88px}
+.hero.collapsed .hero-edit-btn{display:none}
+body.edit-mode .hero-collapse-btn{right:64px}
 #tripEditContainer:empty{display:none}
 #tripEditContainer{margin-top:16px}
 .hero h1{margin:0 0 8px;font-size:34px}
@@ -56,12 +63,12 @@ body:not(.edit-mode) .hero-edit-btn{display:none}
 .sub-tabs.secondary .sub-tab.active{background:#2563eb;color:#fff;border-color:#2563eb}
 
 /* Map shell - 列表在左、地圖在右 (sticky) */
-.map-shell{display:grid;grid-template-columns:420px 1fr;gap:20px;align-items:start}
+.map-shell{display:grid;grid-template-columns:420px 1fr;gap:20px;align-items:stretch}
 .map-shell .map-side{grid-column:1;grid-row:1}
-.map-shell .map-frame-wrap{grid-column:2;grid-row:1;display:grid;gap:12px;position:sticky;top:20px}
-.map-canvas{position:relative;width:100%;height:420px;border-radius:18px;overflow:hidden;background:#f3f4f6;transition:height .25s ease}
+.map-shell .map-frame-wrap{grid-column:2;grid-row:1;display:grid;gap:0;position:sticky;top:20px;height:100%}
+.map-canvas{position:relative;width:100%;height:100%;min-height:560px;border-radius:18px;overflow:hidden;background:#f3f4f6;transition:height .25s ease}
 /* 收藏夾模式下地圖放大，較容易一眼看到所有 marker */
-.map-canvas.fav-canvas{height:min(72vh,640px)}
+.map-canvas.fav-canvas{height:min(78vh,760px)}
 .map-canvas iframe,.map-canvas #leafletMap{position:absolute;inset:0;width:100%;height:100%;border:0}
 .map-canvas[data-mode="leaflet"] iframe{display:none}
 .map-canvas[data-mode="iframe"] #leafletMap{display:none}
@@ -77,9 +84,7 @@ body:not(.edit-mode) .hero-edit-btn{display:none}
 .leaflet-popup-content .pop-title{font-weight:800;font-size:14px;margin-bottom:4px}
 .leaflet-popup-content .pop-meta{color:#6b7280;font-size:12px}
 
-iframe{width:100%;height:420px;border:0;border-radius:18px;background:#f3f4f6}
-.map-focus{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:14px}
-.map-focus h3{margin:0 0 6px;font-size:20px}
+iframe{width:100%;height:560px;border:0;border-radius:18px;background:#f3f4f6}
 .map-side{display:flex;flex-direction:column;min-height:0}
 .map-side .sub-tabs{position:sticky;top:0;background:#fff;z-index:2;padding-bottom:4px;margin-bottom:12px}
 #mapSubContent{display:grid;gap:12px;max-height:600px;overflow-y:auto;padding:4px 8px 4px 4px;scrollbar-gutter:stable}
@@ -242,8 +247,8 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
   .map-shell .map-side,
   .map-shell .map-frame-wrap{grid-column:auto;grid-row:auto}
   .map-shell .map-frame-wrap{position:static}
-  iframe{height:340px}
-  .map-canvas{height:340px}
+  iframe{height:400px}
+  .map-canvas{height:400px}
   #mapSubContent{max-height:none;overflow:visible;padding:0}
 }
 @media (max-width:780px){.meta{grid-template-columns:1fr 1fr}.main-tab{min-width:100px;padding:10px 12px;font-size:13px}}
@@ -269,46 +274,49 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 <div class="wrap">
   <!-- Hero -->
   <div class="hero" data-edit-id="trip">
+    <button class="hero-collapse-btn" id="heroCollapseBtn" type="button">展開</button>
     <button class="hero-edit-btn" id="heroEditBtn" title="編輯標題與基本資料"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 17.46V21h3.54l10.4-10.4-3.54-3.54L3 17.46zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
     <h1 id="title">讀取中…</h1>
-    <p id="subtitle"></p>
-    <div class="meta">
-      <div class="box"><div class="small">日期</div><div id="dates"></div></div>
-      <div class="box"><div class="small">同行人數</div><div id="travelers"></div></div>
-      <div class="box"><div class="small">預算上限</div><div id="budgetPerPerson"></div></div>
-      <div class="box"><div class="small">住宿安排</div><div id="nights"></div></div>
-    </div>
-    <div class="hero-actions">
-      <!-- Google Drive 同步區塊 -->
-      <div class="drive-zone" id="driveZone">
-        <div class="drive-icon">☁️</div>
-        <div class="drive-info">
-          <div class="drive-title">Google Drive 同步</div>
-          <div class="drive-sub" id="driveStatus">未連線</div>
-        </div>
-        <div class="drive-actions">
-          <button class="btn secondary" id="driveSignInBtn" type="button">以 Google 登入</button>
-          <button class="btn secondary" id="drivePickBtn" type="button" hidden>選現有檔案</button>
-          <button class="btn secondary" id="driveLinkBtn" type="button" hidden title="貼上 Drive 共用連結或檔案 ID 直接載入">用連結載入</button>
-          <button class="btn secondary" id="driveNewBtn" type="button" hidden>建立新檔</button>
-          <button class="btn secondary" id="driveSaveBtn" type="button" hidden>立即儲存</button>
-          <label class="auto-save-toggle" id="autoSaveLabel" hidden><input type="checkbox" id="autoSaveChk" checked /> 自動儲存</label>
-          <button class="btn ghost" id="driveSignOutBtn" type="button" hidden>登出</button>
-        </div>
+    <div class="hero-content" id="heroContent">
+      <p id="subtitle"></p>
+      <div class="meta">
+        <div class="box"><div class="small">日期</div><div id="dates"></div></div>
+        <div class="box"><div class="small">同行人數</div><div id="travelers"></div></div>
+        <div class="box"><div class="small">預算上限</div><div id="budgetPerPerson"></div></div>
+        <div class="box"><div class="small">住宿安排</div><div id="nights"></div></div>
       </div>
-
-      <label class="dropzone" id="dropzone" for="fileInput">
-        <div class="drop-main">
-          <div class="drop-title">拖曳或選擇 JSON 以更新資料</div>
-          <div class="drop-sub">優先讀取本機儲存版本，可隨時換入其他 JSON。</div>
+      <div class="hero-actions">
+        <!-- Google Drive 同步區塊 -->
+        <div class="drive-zone" id="driveZone">
+          <div class="drive-icon">☁️</div>
+          <div class="drive-info">
+            <div class="drive-title">Google Drive 同步</div>
+            <div class="drive-sub" id="driveStatus">未連線</div>
+          </div>
+          <div class="drive-actions">
+            <button class="btn secondary" id="driveSignInBtn" type="button">以 Google 登入</button>
+            <button class="btn secondary" id="drivePickBtn" type="button" hidden>選現有檔案</button>
+            <button class="btn secondary" id="driveLinkBtn" type="button" hidden title="貼上 Drive 共用連結或檔案 ID 直接載入">用連結載入</button>
+            <button class="btn secondary" id="driveNewBtn" type="button" hidden>建立新檔</button>
+            <button class="btn secondary" id="driveSaveBtn" type="button" hidden>立即儲存</button>
+            <label class="auto-save-toggle" id="autoSaveLabel" hidden><input type="checkbox" id="autoSaveChk" checked /> 自動儲存</label>
+            <button class="btn ghost" id="driveSignOutBtn" type="button" hidden>登出</button>
+          </div>
         </div>
-        <span class="btn secondary">選擇 JSON</span>
-      </label>
-      <button class="btn ghost edit-toggle" id="editToggle">編輯模式：關</button>
-      <button class="btn ghost" id="exportBtn">匯出 JSON</button>
-      <button class="btn ghost" id="resetBtn">重置為預設</button>
-      <span class="status" id="loadStatus">載入中</span>
-      <input id="fileInput" class="hidden-input" type="file" accept=".json,application/json" />
+
+        <label class="dropzone" id="dropzone" for="fileInput">
+          <div class="drop-main">
+            <div class="drop-title">拖曳或選擇 JSON 以更新資料</div>
+            <div class="drop-sub">優先讀取本機儲存版本，可隨時換入其他 JSON。</div>
+          </div>
+          <span class="btn secondary">選擇 JSON</span>
+        </label>
+        <button class="btn ghost edit-toggle" id="editToggle">編輯模式：關</button>
+        <button class="btn ghost" id="exportBtn">匯出 JSON</button>
+        <button class="btn ghost" id="resetBtn">重置為預設</button>
+        <span class="status" id="loadStatus">載入中</span>
+        <input id="fileInput" class="hidden-input" type="file" accept=".json,application/json" />
+      </div>
     </div>
   </div>
 
@@ -337,7 +345,7 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
           <iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           <div id="leafletMap"></div>
         </div>
-        <div class="map-focus" id="mapFocus"></div>
+        <div id="mapFocus" style="display:none"></div>
       </div>
       <div class="map-side">
         <div class="sub-tabs" id="mapSubTabs">
@@ -384,6 +392,7 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 const STORAGE_KEY = 'travel-notes-data-v1';
 const DRIVE_KEY   = 'travel-notes-drive-v1';
 const TOKEN_KEY   = 'travel-notes-drive-token-v1';
+const HERO_COLLAPSED_KEY = 'travel-notes-hero-collapsed-v1';
 
 // ============== Google Drive 設定 ==============
 // 使用前請到 https://console.cloud.google.com/ 申請 OAuth Client ID 與 API Key
@@ -424,6 +433,7 @@ const state = {
   currentLocations: [],
   editing: null,
   editMode: false,
+  heroCollapsed: true,
   mapMode: 'single',  // 'single' | 'allDay'
   allDayKey: ''
 };
@@ -516,6 +526,18 @@ function saveData(){
 }
 function loadStored(){ try{ const t = localStorage.getItem(STORAGE_KEY); return t ? JSON.parse(t) : null; }catch{ return null; } }
 function clearStored(){ try{ localStorage.removeItem(STORAGE_KEY); }catch{} }
+function loadHeroCollapsed(){
+  try{
+    const v = localStorage.getItem(HERO_COLLAPSED_KEY);
+    if(v === null) return true;
+    return v === '1';
+  }catch{
+    return true;
+  }
+}
+function saveHeroCollapsed(){
+  try{ localStorage.setItem(HERO_COLLAPSED_KEY, state.heroCollapsed ? '1' : '0'); }catch{}
+}
 
 // ============== Google Drive 同步 ==============
 function loadDriveSettings(){
@@ -847,6 +869,7 @@ function scheduleDriveAutoSave(){
 
 function setData(newData){
   state.data = newData;
+  normalizeStopTags();
   if(!state.activeDay) state.activeDay = newData.days?.[0]?.key || '';
   if(!state.activeStay) state.activeStay = newData.stay_groups?.[0]?.key || '';
   if(!state.activeShop) state.activeShop = newData.shop_groups?.[0]?.key || '';
@@ -856,6 +879,16 @@ function setData(newData){
   renderAll();
   // 背景解析短網址
   setTimeout(() => tryResolveShortMaps(), 200);
+}
+
+// 舊資料相容：把 stop.type 併入 stop.tags，之後統一只用 tags
+function normalizeStopTags(){
+  (state.data?.days||[]).forEach(day => (day.stops||[]).forEach(stop => {
+    const tags = Array.isArray(stop.tags) ? stop.tags.map(t => String(t).trim()).filter(Boolean) : [];
+    if(nonEmpty(stop.type)) tags.push(String(stop.type).trim());
+    stop.tags = [...new Set(tags)];
+    delete stop.type;
+  }));
 }
 
 // 對 state.data 做修改 + 自動 save + re-render
@@ -894,30 +927,37 @@ function buildLocations(){
   let seq = 0;
   (data.days||[]).forEach((day, di)=>(day.stops||[]).forEach((stop, si)=>{
     const m = getMap(stop);
+    const ll = extractLatLng(stop);
     if(!m) return;
+    const tagText = Array.isArray(stop.tags) ? stop.tags.map(t => String(t).trim()).filter(Boolean).join('、') : '';
     locs.push({id:`day-${day.key||di}-${si}`, stopid:`${day.key||di}:${si}`, map:m,
       source:`每日行程 / ${day.label||'Day '+(di+1)}`,
       title:stop.maps_label || stop.name || '地點',
-      subtitle:[stop.type, stop.time, stop.cost].filter(Boolean).join('｜'),
-      address:stop.short_address || stop.address || '', order:seq++});
+      subtitle:[tagText, stop.time, stop.cost].filter(Boolean).join('｜'),
+      address:stop.short_address || stop.address || '',
+      fullAddress:stop.address || '', lat:ll?.lat, lng:ll?.lng, order:seq++});
   }));
   (data.stay_groups||[]).forEach((g, gi)=>(g.items||[]).forEach((it, ii)=>{
     const m = getMap(it);
+    const ll = extractLatLng(it);
     if(!m) return;
     locs.push({id:`stay-${g.key||gi}-${ii}`, map:m,
       source:`住宿 / ${g.label||'住宿'}`,
       title:it.name||'住宿',
       subtitle:it.note||it.reference||'',
-      address:it.address||it.area||'', order:seq++});
+      address:it.address||it.area||'',
+      fullAddress:it.address||'', lat:ll?.lat, lng:ll?.lng, order:seq++});
   }));
   (data.shop_groups||[]).forEach((g, gi)=>(g.items||[]).forEach((it, ii)=>{
     const m = getMap(it);
+    const ll = extractLatLng(it);
     if(!m) return;
     locs.push({id:`shop-${g.key||gi}-${ii}`, map:m,
       source:`資訊分類 / ${g.label||'分類'}`,
       title:it.name||'店家',
       subtitle:[it.tag, it.price].filter(Boolean).join('｜'),
-      address:it.address||'', order:seq++});
+      address:it.address||'',
+      fullAddress:it.address||'', lat:ll?.lat, lng:ll?.lng, order:seq++});
   }));
   return locs;
 }
@@ -930,15 +970,45 @@ function focusMap(id){
   state.mapMode = 'single';
   useGoogleIframe();
   const frame = $('#mapFrame');
-  const newSrc = embedUrl(loc.map);
+  const newSrc = buildSingleEmbedSrc(loc);
   if(frame.src !== newSrc) frame.src = newSrc;
-  $('#mapFocus').innerHTML =
-    `<div class="small muted">${escapeHtml(loc.source)}</div>
-     <h3>${escapeHtml(loc.title)}</h3>
-     ${nonEmpty(loc.subtitle) ? `<div class="muted small" style="margin-top:6px">${escapeHtml(loc.subtitle)}</div>` : ''}
-     ${nonEmpty(loc.address) ? `<div style="margin-top:10px"><strong>地址：</strong>${escapeHtml(loc.address)}</div>` : ''}
-     <div class="actions"><a class="btn secondary" href="${escapeHtml(loc.map)}" target="_blank" rel="noopener noreferrer">開啟 Google Maps</a></div>`;
   highlightActiveMap();
+}
+
+// 為單一地點挑選最佳的 iframe URL。
+// 核心觀察：Google 解析後的 URL 路徑 /maps/place/<官方店名>/@lat,lng/... 中的 <官方店名>
+// 是 Google 自己當作 unique key 的那個名字（會包含分店資訊，如「京的燒肉處 弘 京都站前店」）。
+// 用這個名字當 ?q= 查詢一定能 unique 命中那個地點，iframe 顯示左上 Place 面板，
+// 點「在 Google Maps 開啟」也會直達該地點，不會跳搜尋頁。
+// 退而求其次：
+//   1. 有 lat/lng → 用 q=lat,lng (顯示名) 釘單點
+//   2. 否則退回舊 embedUrl
+function buildSingleEmbedSrc(loc){
+  const officialName = extractPlaceNameFromGoogleUrl(loc.map);
+  if(officialName){
+    return `https://www.google.com/maps?q=${encodeURIComponent(officialName)}&output=embed`;
+  }
+  // 沒有官方 place name → 走 embedUrl(loc.map)，行為與舊版一致
+  // 不再硬加 "(顯示名)"，避免 lat,lng 與顯示名不一致時被當搜尋字串
+  return embedUrl(loc.map || '');
+}
+
+// 從 Google Maps 解析後的長 URL 抽出 /maps/place/<官方店名>/ 那段店名（已 URL-decode、+ 轉空白）
+function extractPlaceNameFromGoogleUrl(url){
+  if(!nonEmpty(url)) return '';
+  try {
+    const u = new URL(url);
+    const isGoogle = /google\.[a-z.]+/i.test(u.hostname) || u.hostname === 'maps.google.com';
+    if(!isGoogle) return '';
+    const m = u.pathname.match(/\/maps\/place\/([^/]+)/i);
+    if(!m) return '';
+    let name = decodeURIComponent(m[1]).replace(/\+/g, ' ').trim();
+    // 純座標路徑（例如 /maps/place/34.988,135.758）就不是真正的地點名
+    if(/^-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+$/.test(name)) return '';
+    return name;
+  } catch {
+    return '';
+  }
 }
 
 // 從 stop 取出 lat/lng
@@ -1078,7 +1148,7 @@ function showStopsOnLeaflet(stops, day){
     marker.bindPopup(`
       <div class="pop-title">${num}. ${escapeHtml(stop.name||'(未命名)')}</div>
       ${nonEmpty(stop.time) ? `<div class="pop-meta">⏰ ${escapeHtml(stop.time)}</div>` : ''}
-      ${nonEmpty(stop.type) ? `<div class="pop-meta">🏷 ${escapeHtml(stop.type)}</div>` : ''}
+      ${Array.isArray(stop.tags) && stop.tags.length ? `<div class="pop-meta">🏷 ${escapeHtml(stop.tags.join(' / '))}</div>` : ''}
       ${nonEmpty(stop.address) ? `<div class="pop-meta" style="margin-top:4px">📍 ${escapeHtml(stop.address)}</div>` : ''}
       <div style="margin-top:6px"><a href="${escapeHtml(mapsLink)}" target="_blank" rel="noopener noreferrer">在 Google Maps 開啟</a></div>
     `);
@@ -1304,21 +1374,14 @@ function computeStayDuration(timeStr){
   return `${mins} 分`;
 }
 
-// ============== 收集 stop 出現過的所有「分類字眼」（給類型/標籤下拉選單用） ==============
-// 使用者觀念上「類型」和「標籤」都是同一個概念 — 都是這個地點屬於哪個分類
-//（「所有地點」上方那排分類 tab 也是用 type+tags 合併來算的，見 getMergedTags）
-// 所以兩個下拉共用同一個分類池：歷史上出現在任何一個欄位的字眼，下次兩個下拉都選得到
-// 新增的分類自動進入下次的下拉，不需另設管理介面
-function collectAllStopCategories(){
+// ============== 收集 stop 出現過的所有標籤（給 tags 下拉選單用） ==============
+function collectStopTags(){
   const set = new Set();
   (state.data?.days||[]).forEach(d => (d.stops||[]).forEach(s => {
-    if(nonEmpty(s.type)) set.add(String(s.type).trim());
     if(Array.isArray(s.tags)) s.tags.forEach(t => { if(nonEmpty(t)) set.add(String(t).trim()); });
   }));
   return Array.from(set).sort();
 }
-const collectStopTypes = collectAllStopCategories;
-const collectStopTags = collectAllStopCategories;
 
 // ============== 編輯欄位設定 ==============
 const FIELD_DEFS = {
@@ -1340,12 +1403,9 @@ const FIELD_DEFS = {
   stop: [
     {key:'time', label:'時間（例：09:00-10:30，停留時間會自動計算）'},
     {key:'name', label:'名稱'},
-    {key:'maps_label', label:'地圖標籤（可留空，貼地圖網址後自動帶入店名）'},
-    {key:'short_address', label:'簡短地址（可留空，會由完整地址自動推導）'},
-    {key:'type', label:'類型（可從下拉選或手動輸入）', type:'datalist', options:()=>collectStopTypes()},
     {key:'cost', label:'費用'},
     {key:'address', label:'完整地址（可留空，貼地圖網址後自動帶入）'},
-    {key:'tags', label:'自訂標籤（從下拉點選或用逗號分隔自訂）', type:'tags', options:()=>collectStopTags()},
+    {key:'tags', label:'標籤（從下拉點選或用逗號分隔）', type:'tags', options:()=>collectStopTags()},
     {key:'note', label:'備註 (支援 Markdown)', type:'textarea', rows:5},
     {key:'map', label:'Google Maps URL（支援 maps.app.goo.gl 短網址，儲存後會自動解析座標）'},
     {key:'highlight', label:'標記為重點', type:'checkbox'}
@@ -1388,7 +1448,7 @@ const FIELD_DEFS = {
 };
 
 // ============== 通用編輯表單 ==============
-// 取選項 helper：支援 options 為陣列或函式（函式用於需要動態收集現有資料當選項時，例：類型/標籤下拉）
+// 取選項 helper：支援 options 為陣列或函式（函式用於需要動態收集現有資料當選項時）
 function _resolveOptions(f){
   if(typeof f.options === 'function') return f.options() || [];
   return f.options || [];
@@ -1414,7 +1474,7 @@ function buildEditForm(fields, values, onSave){
       const opts = _resolveOptions(f);
       const listId = `dl-${f.key}-${Math.random().toString(36).slice(2,7)}`;
       const optionsHtml = opts.map(o => `<option value="${escapeHtml(o)}"></option>`).join('');
-      return `<div class="form-row"><label>${escapeHtml(f.label)}</label><input type="text" data-key="${f.key}" value="${escapeHtml(v||'')}" list="${listId}" placeholder="點 ▼ 從現有選項選，或直接輸入新類型"><datalist id="${listId}">${optionsHtml}</datalist></div>`;
+      return `<div class="form-row"><label>${escapeHtml(f.label)}</label><input type="text" data-key="${f.key}" value="${escapeHtml(v||'')}" list="${listId}" placeholder="點 ▼ 從現有選項選，或直接輸入"><datalist id="${listId}">${optionsHtml}</datalist></div>`;
     }
     if(f.type === 'tags'){
       // 多標籤：input 仍用「逗號分隔」格式，但下方加可點擊的「現有標籤」chip 快速加入
@@ -1510,6 +1570,10 @@ function renderHero(){
   $('#travelers').textContent = (d.travelers || 0) + ' 人';
   $('#budgetPerPerson').textContent = money(d.budget_per_person || 0) + ' / 人';
   $('#nights').textContent = d.nights || '';
+  const hero = $('.hero');
+  const collapseBtn = $('#heroCollapseBtn');
+  if(hero) hero.classList.toggle('collapsed', !!state.heroCollapsed);
+  if(collapseBtn) collapseBtn.textContent = state.heroCollapsed ? '展開' : '收合';
 
   // hero 編輯表單（編輯模式下點鉛筆才會插入）
   const editor = $('#tripEditContainer');
@@ -1662,7 +1726,7 @@ function renderDaysSubTab(container){
     mutate(d => {
       const di = d.days.findIndex(x => x.key === day.key);
       d.days[di].stops = d.days[di].stops || [];
-      d.days[di].stops.push({time:'', name:'', maps_label:'', short_address:'', type:'', stay:'', cost:'', address:'', note:'', next:'', map:'', highlight:false});
+      d.days[di].stops.push({time:'', name:'', maps_label:'', short_address:'', stay:'', cost:'', address:'', tags:[], note:'', next:'', map:'', highlight:false});
       state.editing = `stop:${day.key}:${d.days[di].stops.length - 1}`;
     });
   }));
@@ -1694,8 +1758,8 @@ function renderStopCard(day, stop, idx){
 
   let nextHtml = '';
   if(nextStop){
-    const nextLabel = (nextStop.name || '(未命名)') + (nonEmpty(nextStop.time) ? ` · ${nextStop.time}` : '');
-    nextHtml = `<button type="button" class="next-btn" data-next-day="${escapeHtml(nextDayKey)}" data-next-idx="${nextStopIdx}">前往下一站：${escapeHtml(nextLabel)} →</button>`;
+    const nextLabel = nextStop.name || '(未命名)';
+    nextHtml = `<button type="button" class="next-btn" data-next-day="${escapeHtml(nextDayKey)}" data-next-idx="${nextStopIdx}">下一站：${escapeHtml(nextLabel)}</button>`;
   }
 
   // 停留時間：優先用「時間區間」自動算，沒填區間才退回舊版手填的 stop.stay 欄位（向後相容）
@@ -1708,7 +1772,6 @@ function renderStopCard(day, stop, idx){
         <div class="stop-meta">
           ${nonEmpty(stop.time) ? `<span class="time-pill">${escapeHtml(stop.time)}</span>` : ''}
           ${nonEmpty(stayText) ? `<span class="pill">${escapeHtml(stayText)}</span>` : ''}
-          ${nonEmpty(stop.type) ? `<span class="pill">${escapeHtml(stop.type)}</span>` : ''}
         </div>
       </div>
       ${nonEmpty(stop.cost) ? `<div class="cost-pill">${escapeHtml(stop.cost)}</div>` : ''}
@@ -1751,12 +1814,9 @@ function renderStopCard(day, stop, idx){
   return card;
 }
 
-// 合併 stop 的 type 與自訂 tags，去重
 function getMergedTags(stop){
-  const merged = [];
-  if(nonEmpty(stop.type)) merged.push(String(stop.type).trim());
-  if(Array.isArray(stop.tags)) stop.tags.forEach(t => { if(nonEmpty(t)) merged.push(String(t).trim()); });
-  return [...new Set(merged)];
+  if(!Array.isArray(stop.tags)) return [];
+  return [...new Set(stop.tags.map(t => String(t).trim()).filter(Boolean))];
 }
 
 function renderAllLocationsSubTab(container){
@@ -3822,6 +3882,7 @@ $('#driveSaveBtn').addEventListener('click', saveToDrive);
 
 loadDriveSettings();
 updateDriveUI();
+state.heroCollapsed = loadHeroCollapsed();
 $('#editToggle').addEventListener('click', () => {
   state.editMode = !state.editMode;
   state.editing = null;
@@ -3837,6 +3898,11 @@ $('#heroEditBtn').addEventListener('click', () => {
   if(state.editing === 'trip'){
     $('#tripEditContainer').scrollIntoView({behavior:'smooth', block:'nearest'});
   }
+});
+$('#heroCollapseBtn').addEventListener('click', () => {
+  state.heroCollapsed = !state.heroCollapsed;
+  saveHeroCollapsed();
+  renderHero();
 });
 
 const dropzone = $('#dropzone');

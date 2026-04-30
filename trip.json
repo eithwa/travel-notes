@@ -410,31 +410,32 @@
       "label": "Day 1",
       "title": "5/31（六）桃園 → 大阪 → 京都",
       "theme": "抵達日 + 京都夜生活暖身",
-      "hero": "一蘭拉麵 + Kingdom 酒吧",
+      "hero": "京都御苑 × 燒肉弘",
       "stops": [
         {
           "time": "06:30–09:30",
           "name": "桃園國際機場 第一航廈",
           "maps_label": "桃園機場 T1",
           "short_address": "桃園 T1",
-          "type": "交通",
           "stay": "60 分",
-          "cost": "—",
+          "cost": "",
           "address": "桃園市大園區航站南路 9 號",
           "note": "起飛前 2 小時報到，廉航行李須先在線上加購。",
           "next": "MM028 樂桃航空",
-          "map": "https://maps.google.com/?q=25.0797,121.2342",
+          "map": "https://www.google.com/maps/place/%E6%A1%83%E5%9C%92%E6%A9%9F%E5%A0%B4%E7%AC%AC%E4%B8%80%E8%88%AA%E5%BB%88/@25.079018,121.235135,17z/data=!4m10!1m2!2m1!1z5qGD5ZyS5qmf5aC0IFQxIOahg-WckuW4guWkp-WckuWNgOiIquermeWNl-i3ryA5IOiZnw!3m6!1s0x34429fbffa15405f:0x1b25f65e209f6397!8m2!3d25.081705!4d121.2391126!15sCjTmoYPlnJLmqZ_loLQgVDEg5qGD5ZyS5biC5aSn5ZyS5Y2A6Iiq56uZ5Y2X6LevIDkg6JmfWj0iO-ahg-WckiDmqZ_loLQgdDEg5qGD5ZySIOW4giDlpKcg5ZyS5Y2AIOiIqiDnq5kg5Y2X6LevIDkg6JmfkgEXbG9naWNhbF90cmFuc2l0X3N0YXRpb26aASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVUmZhVkJoVVV0UkVBReABAPoBBAgAEBA!16s%2Fg%2F11l5kpt4sv?hl=zh-TW&entry=ttu&g_ep=EgoyMDI2MDQyNy4wIKXMDSoASAFQAw%3D%3D",
           "highlight": false,
           "lat": 25.0797,
           "lng": 121.2342,
-          "tags": []
+          "tags": [
+            "交通"
+          ],
+          "map_open": "https://maps.app.goo.gl/gSmexj4uG73LZFWV9"
         },
         {
           "time": "09:30–13:20",
           "name": "MM028 樂桃航空",
           "maps_label": "",
           "short_address": "桃園 → 關西",
-          "type": "航班",
           "stay": "230 分",
           "cost": "NT$4,500 / 人",
           "address": "",
@@ -442,86 +443,95 @@
           "next": "關西機場入境",
           "map": "",
           "highlight": true,
-          "tags": []
+          "tags": [
+            "航班"
+          ]
         },
         {
           "time": "13:20–14:30",
           "name": "關西國際機場 T2",
           "maps_label": "KIX Terminal 2",
-          "type": "入境",
           "stay": "70 分",
-          "cost": "—",
+          "cost": "",
           "note": "T2 → T1 接駁巴士，入境後購買 ICOCA + HARUKA 套票。\n[關西機場到京都交通攻略：HARUKA、利木津巴士、關空快速一次比較](https://osaka.letsgojp.com/archives/840756/)",
           "next": "JR HARUKA → 京都",
           "map": "https://maps.google.com/?q=34.4347,135.2440",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "入境"
+          ],
           "lat": 34.4347,
-          "lng": 135.244
+          "lng": 135.244,
+          "short_address": "",
+          "address": ""
         },
         {
           "time": "14:30–16:00",
           "name": "JR HARUKA 關西特快",
           "maps_label": "HARUKA 京都行",
           "short_address": "機場 → 京都",
-          "type": "交通",
           "stay": "75 分",
-          "cost": "NT$728/ 人",
+          "cost": "NT$728 / 人",
           "address": "關西機場站 → 京都站",
           "note": "最快直達京都的方式，車程約 75 分鐘。\n+ 出「八條口」\n+ 面對大馬路（八條通）\n+ 往東走（左手邊）\n+ 走約 3～5 分鐘就會看到飯店",
           "next": "京都飯店 Check-in",
           "map": "",
           "highlight": false,
-          "tags": []
+          "tags": [
+            "交通"
+          ]
         },
         {
           "time": "16:00–17:00",
           "name": "京都海茵娜飯店 Check-in",
           "maps_label": "海茵娜酒店",
-          "type": "住宿",
           "stay": "60 分",
-          "cost": "NT$2212/人",
+          "cost": "NT$2212 / 人",
           "note": "放行李、稍作休息再出門。\n[海茵娜酒店booking](booking.com/hotel/jp/bian-nahoterujing-du-ba-tiao-kou-yi-qian.zh-tw.html?label=gog235jc-10CAEoggI46AdIMFgDaOcBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuAL4zPPOBsACAdICJDMzOTkyY2EwLTc3MjItNDYxOC1hOGNlLTNiY2E2Y2E1YzY4MtgCAeACAQ-Share-BsOQ2V%401776091791&sid=07eba64fb2983410679c0dfac0778b30&aid=397594&ucfs=1&arphpl=1&checkin=2026-05-17&checkout=2026-05-18&dest_id=-235402&dest_type=city&group_adults=6&req_adults=6&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=793c6744fbff0234&srepoch=1777473676&all_sr_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&highlighted_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&matching_block_id=461167303_140639593_2_2_0&sr_pri_blocks=461167303_140639593_2_2_0__2207450%2C461167314_140639593_2_2_0__2207450%2C461167317_238087352_2_2_0__2635000&from=searchresults)\n+ 京都：Henn na hotel \n+ 日期：5/31-6/2\n+ 雙床房*3\n+ check in 時間： 15：00-00：00\n+ check out 時間： 11：00以前\n+ 總金額：66388日幣（根據實際收款日匯率變動）",
           "next": "京都御苑",
           "map": "https://maps.google.com/?q=Henn%20na%20Hotel%20Kyoto%20Hachijoguchi%20Ekimae%2C%20Japan%2C%20%E3%80%92601-8004%20Kyoto%2C%20Minami%20Ward%2C%20Higashikujo%20Higashisannocho%2C%20%EF%BC%91%EF%BC%95",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "住宿"
+          ],
           "lat": 34.983299,
           "lng": 135.761936,
           "short_address": "Kyoto",
-          "address": "Japan, 〒601-8004 Kyoto, Minami Ward, Higashikujo Higashisannocho, １５"
+          "address": "京都市南區東九條東山王町15"
         },
         {
           "time": "17:00–18:30",
           "name": "京都御苑",
           "maps_label": "京都御苑",
-          "short_address": "京都市中京區",
-          "type": "景點",
+          "short_address": "府京都市上京區京都御苑3",
           "stay": "90 分",
-          "cost": "免費",
+          "cost": "",
           "address": "京都市上京區京都御苑 3",
-          "note": "傍晚散步，老樹參道很舒服。",
+          "note": "傍晚散步，老樹參道很舒服。\n+ 飯店 → 京都御苑\n  - 搭乘 地鐵烏丸線\n  - 京都 → 今出川 (約 10 分)",
           "next": "晚餐",
           "map": "https://maps.google.com/?q=Kyoto%20Gyoen%20National%20Garden%2C%203%20Kyotogyoen%2C%20Kamigyo%20Ward%2C%20Kyoto%2C%20602-0881%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "景點"
+          ],
           "lat": 35.0252635,
           "lng": 135.7623445
         },
         {
           "time": "18:30-21:00",
-          "name": "燒肉弘 京都站前店",
+          "name": "晚餐 燒肉弘 京都站前店",
           "maps_label": "Yakiniku Hiro (Kyoto Station)",
-          "short_address": "510-1",
-          "type": "美食",
+          "short_address": "府京都市下京區",
           "stay": "30分",
-          "cost": "",
-          "address": "510-1 Shiokojicho, Shimogyo Ward, Kyoto, 600-8212, Japan",
+          "cost": "約NT$2000 / 人",
+          "address": "京都市下京區鹽小路町510-1",
           "note": "主打高品質黑毛和牛、價格相對親民的京都人氣燒肉店。",
           "next": "",
           "map": "https://maps.google.com/?q=Yakiniku%20Hiro%20(Kyoto%20Station)%2C%20510-1%20Shiokojicho%2C%20Shimogyo%20Ward%2C%20Kyoto%2C%20600-8212%2C%20Japan",
           "highlight": true,
-          "tags": [],
+          "tags": [
+            "美食"
+          ],
           "lat": 34.988391,
           "lng": 135.761125
         },
@@ -530,15 +540,16 @@
           "name": "Kingdom（酒吧）",
           "maps_label": "Kingdom Bar",
           "short_address": "木屋町 / 河原町",
-          "type": "夜生活",
           "stay": "150 分",
-          "cost": "—",
-          "address": "京都市中京區木屋町通附近",
-          "note": "Day 1 收尾酒吧；隔天行程早，建議不要太晚。",
+          "cost": "約NT$1000 / 人",
+          "address": "京都市下京區筋屋町151",
+          "note": "+ 燒肉弘 → Kingdom\n  + 烏丸線 京都站 → 四条站 (約 5 分)\n  + 出站後走路 (約 5～10 分)\n+ Day 1 收尾酒吧；隔天行程早，建議不要太晚。",
           "next": "回飯店",
-          "map": "https://maps.google.com/?q=35.0003755%2C135.7648757",
+          "map": "https://maps.google.com/?q=Kingdom%2C%20151%20Sujiyacho%2C%20Shimogyo%20Ward%2C%20Kyoto%2C%20600-8061%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "夜生活"
+          ],
           "lat": 35.0003755,
           "lng": 135.7648757
         }
@@ -556,7 +567,6 @@
           "name": "出發前往五条坂",
           "maps_label": "五条坂",
           "short_address": "京都 東山",
-          "type": "交通",
           "stay": "30 分",
           "cost": "—",
           "address": "京都市東山區五条坂",
@@ -564,7 +574,9 @@
           "next": "清水寺",
           "map": "https://maps.google.com/?q=34.9966,135.7806",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "交通"
+          ],
           "lat": 34.9966,
           "lng": 135.7806
         },
@@ -573,7 +585,6 @@
           "name": "清水寺 ",
           "maps_label": "清水寺",
           "short_address": "東山",
-          "type": "景點",
           "stay": "150 分",
           "cost": "清水寺 500 円 (NT$100)",
           "address": "京都市東山區清水 1-294",
@@ -581,7 +592,9 @@
           "next": "午餐",
           "map": "https://maps.google.com/?q=Kiyomizu-dera%2C%201%20Chome-294%20Kiyomizu%2C%20Higashiyama%20Ward%2C%20Kyoto%2C%20605-0862%2C%20Japan",
           "highlight": true,
-          "tags": [],
+          "tags": [
+            "景點"
+          ],
           "lat": 34.994303,
           "lng": 135.7844389
         },
@@ -589,16 +602,17 @@
           "time": "11:00-12:00",
           "name": "三年坂 → 二年坂 → 午餐",
           "maps_label": "Sannenzaka",
-          "type": "景點",
           "stay": "30分",
           "cost": "",
           "note": "清水寺 → 三年坂 → 二年坂",
           "next": "",
           "map": "https://maps.google.com/?q=Sannenzaka%2C%202%20Chome-211%20Kiyomizu%2C%20Higashiyama%20Ward%2C%20Kyoto%2C%20605-0862%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "景點"
+          ],
           "short_address": "2 Chome-211 Ki",
-          "address": "2 Chome-211 Kiyomizu, Higashiyama Ward, Kyoto, 605-0862, Japan",
+          "address": "京都市東山區清水2丁目211",
           "lat": 34.994303,
           "lng": 135.7844389
         },
@@ -607,15 +621,16 @@
           "name": "午餐 鮨麻布 東山",
           "maps_label": "鮨麻布 東山",
           "short_address": "Kyoto",
-          "type": "美食",
           "stay": "",
           "cost": "約 NT$2600 / 人",
-          "address": "Japan, 〒605-0824 Kyoto, Higashiyama Ward, Yasaka Kamimachi, ３６６ 内 THE SODOH HIGASHIYAMA KYOTO",
-          "note": "主打職人手握江戶前壽司，結合精緻食材與靜謐氛圍，呈現高質感的京都壽司體驗。\nhttps://tabelog.com/tw/kyoto/A2601/A260301/26041607/",
+          "address": "京都市東山區八坂上町366",
+          "note": "主打職人手握江戶前壽司，結合精緻食材與靜謐氛圍，呈現高質感的京都壽司體驗。\n[Tabelog介紹](https://tabelog.com/tw/kyoto/A2601/A260301/26041607/)",
           "next": "",
           "map": "https://maps.google.com/?q=Sushi%20Azabu%20Higashiyama%2C%20Japan%2C%20%E3%80%92605-0824%20Kyoto%2C%20Higashiyama%20Ward%2C%20Yasaka%20Kamimachi%2C%20%EF%BC%93%EF%BC%96%EF%BC%96%20%E5%86%85%20THE%20SODOH%20HIGASHIYAMA%20KYOTO",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "美食"
+          ],
           "lat": 35.0023302,
           "lng": 135.776457
         },
@@ -624,24 +639,24 @@
           "name": "午餐 らーめん錦 (備案)",
           "maps_label": "Ramen Nishiki",
           "short_address": "416",
-          "type": "美食",
           "stay": "90 分",
           "cost": "約 NT$260 / 人",
-          "address": "416 Hashimotocho, Higashiyama Ward, Kyoto, 605-0083, Japan",
+          "address": "京都市東山區橋本町416",
           "note": "平價份量足的日式拉麵店，出餐快、適合快速解決一餐。",
           "next": "伏見稻荷大社",
           "map": "https://maps.google.com/?q=Ramen%20Nishiki%2C%20416%20Hashimotocho%2C%20Higashiyama%20Ward%2C%20Kyoto%2C%20605-0083%2C%20Japan",
           "highlight": false,
           "lat": 35.0036,
           "lng": 135.7782,
-          "tags": []
+          "tags": [
+            "美食"
+          ]
         },
         {
           "time": "13:30–16:00",
           "name": "伏見稻荷大社",
           "maps_label": "伏見稻荷大社",
           "short_address": "伏見區",
-          "type": "景點",
           "stay": "120 分",
           "cost": "免費",
           "address": "京都市伏見區深草藪之內町 68",
@@ -651,16 +666,17 @@
           "highlight": true,
           "lat": 34.9671,
           "lng": 135.7727,
-          "tags": []
+          "tags": [
+            "景點"
+          ]
         },
         {
           "time": "16:00–18:00",
           "name": "寶可夢中心 京都店 + BEAMS / Graphpaper",
           "maps_label": "Pokémon Center Kyoto",
           "short_address": "四条 / 京都大丸",
-          "type": "購物",
           "stay": "90 分",
-          "cost": "—",
+          "cost": "",
           "address": "京都市下京區京都大丸 6F",
           "note": "京都大丸 6F 寶可夢中心；BEAMS / Graphpaper 在四条同區。",
           "next": "晚餐",
@@ -668,31 +684,33 @@
           "highlight": false,
           "lat": 35.0036,
           "lng": 135.7615,
-          "tags": []
+          "tags": [
+            "購物"
+          ]
         },
         {
           "time": "18:00–20:30",
-          "name": "晚餐 京の焼肉処 弘 先斗町店",
+          "name": "晚餐 燒肉弘 先斗町店",
           "maps_label": "河原町晚餐",
           "short_address": "河原町",
-          "type": "美食",
           "stay": "90 分",
           "cost": "約 NT$2200 / 人",
-          "address": "京都市中京區河原町通",
+          "address": "京都市中京區材木町176-1",
           "note": "主打鴨川旁先斗町氛圍，邊享用黑毛和牛燒肉邊感受京都夜景，適合想要氣氛與用餐體驗兼具的選擇。",
           "next": "友都八喜",
           "map": "https://maps.google.com/?q=Kyo-Yakiniku%20HIRO%20Pontocho%20Annex%20-%20Kyoto%20Wagyu%20Beef%20Restaurant%20-%2C%20176-1%20Zaimokucho%2C%20Nakagyo%20Ward%2C%20Kyoto%2C%20604-8017%2C%20Japan",
           "highlight": true,
           "lat": 35.0036,
           "lng": 135.7682,
-          "tags": []
+          "tags": [
+            "美食"
+          ]
         },
         {
           "time": "20:30–21:30",
           "name": "友都八喜 京都店（Yodobashi）",
           "maps_label": "友都八喜 京都店",
           "short_address": "京都站",
-          "type": "購物",
           "stay": "60 分",
           "cost": "—",
           "address": "京都市下京區烏丸通七条下る東塩小路町 590-2",
@@ -702,22 +720,25 @@
           "highlight": false,
           "lat": 34.9886,
           "lng": 135.7585,
-          "tags": []
+          "tags": [
+            "購物"
+          ]
         },
         {
           "time": "21:30–23:30",
           "name": "鳥貴族（居酒屋）",
           "maps_label": "鳥貴族",
           "short_address": "四条河原町",
-          "type": "夜生活",
           "stay": "90 分",
           "cost": "全品 370 円 (NT$74)",
-          "address": "京都市中京區河原町通",
+          "address": "京都市下京區橋本町109",
           "note": "全品均一價串燒居酒屋，Day 2 完美收尾。",
           "next": "回飯店",
           "map": "https://maps.google.com/?q=YAKITORI%20Torikizoku%20Shijo%20Kawaramachi%20Store%2C%20Japan%2C%20%E3%80%92600-8011%20Kyoto%2C%20Shimogyo%20Ward%2C%20Hashimotocho%2C%20109",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "夜生活"
+          ],
           "lat": 35.00376,
           "lng": 135.770747
         }
@@ -735,7 +756,6 @@
           "name": "退房 + 京都 → 大阪 JR 新快速",
           "maps_label": "京都站 → 大阪站",
           "short_address": "京都 → 大阪",
-          "type": "交通",
           "stay": "90 分",
           "cost": "約 NT$114 / 人",
           "address": "JR 京都站 → JR 大阪站",
@@ -743,22 +763,25 @@
           "next": "大阪飯店寄行李",
           "map": "",
           "highlight": false,
-          "tags": []
+          "tags": [
+            "交通"
+          ]
         },
         {
           "time": "10:00-10:30",
-          "name": "大阪格蘭比亞大酒店 checkin",
+          "name": "大阪格蘭比亞酒店 Check-in",
           "maps_label": "Hotel Granvia Osaka",
           "short_address": "3 Chome-1-1 Um",
-          "type": "住宿",
           "stay": "",
-          "cost": "NT$2639/人",
-          "address": "3 Chome-1-1 Umeda, Kita Ward, Osaka, 530-0001, Japan",
-          "note": "出 JR大阪站「御堂筋南口」\n看到大馬路（御堂筋）\n往南走\n約走 5～8分鐘\n抵達飯店[booking](https://www.booking.com/hotel/jp/granvia-osaka.zh-tw.html?aid=1288258&label=metagha-link-MRTW-hotel-241706_dev-desktop_los-1_bw-32_dow-Sunday_defdate-0_room-0_gstadt-2_rateid-tw_aud-9181518022_gacid-21404718441_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260517_ppt-G_lp-2158_r-14320554018054943261&sid=07eba64fb2983410679c0dfac0778b30&all_sr_blocks=24170796_374012663_2_2_0&checkin=2026-05-17&checkout=2026-05-18&dest_id=241706&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=24170796_374012663_2_2_0&hpos=1&matching_block_id=24170796_374012663_2_2_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=24170796_374012663_2_2_0__2365200&srepoch=1776181763&srpvid=03ce6f3a36b10538&type=total&ucfs=1&)\n\n日期：6/2-6/3\n標準客房（兩床）*3\ncheck in 時間： 15：00-00：00\ncheck out 時間： 12：00以前\n總金額：79179日幣（根據實際收款日匯率變動",
+          "cost": "NT$2639 / 人",
+          "address": "大阪市北區梅田3丁目1-1",
+          "note": "出 JR大阪站「御堂筋南口」\n看到大馬路（御堂筋）\n往南走\n約走 5～8分鐘\n抵達飯店[booking](https://www.booking.com/hotel/jp/granvia-osaka.zh-tw.html?aid=1288258&label=metagha-link-MRTW-hotel-241706_dev-desktop_los-1_bw-32_dow-Sunday_defdate-0_room-0_gstadt-2_rateid-tw_aud-9181518022_gacid-21404718441_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260517_ppt-G_lp-2158_r-14320554018054943261&sid=07eba64fb2983410679c0dfac0778b30&all_sr_blocks=24170796_374012663_2_2_0&checkin=2026-05-17&checkout=2026-05-18&dest_id=241706&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=24170796_374012663_2_2_0&hpos=1&matching_block_id=24170796_374012663_2_2_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=24170796_374012663_2_2_0__2365200&srepoch=1776181763&srpvid=03ce6f3a36b10538&type=total&ucfs=1&)\n\n+ 格蘭比亞酒店\n+ 日期：6/2-6/3\n+ 標準客房（兩床）*3\n+ check in 時間： 15：00-00：00\n+ check out 時間： 12：00以前\n+ 總金額：79179日幣（根據實際收款日匯率變動",
           "next": "",
           "map": "https://maps.google.com/?q=Hotel%20Granvia%20Osaka%2C%203%20Chome-1-1%20Umeda%2C%20Kita%20Ward%2C%20Osaka%2C%20530-0001%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "住宿"
+          ],
           "lat": 34.7014952,
           "lng": 135.4970875
         },
@@ -767,9 +790,8 @@
           "name": "大阪城 + 大阪城公園",
           "maps_label": "大阪城",
           "short_address": "中央區",
-          "type": "景點",
           "stay": "150 分",
-          "cost": "天守閣 NT$120/人",
+          "cost": "天守閣 NT$120 / 人",
           "address": "大阪府大阪市中央區大阪城 1-1",
           "note": "登天守閣展望市區，公園野餐感受古城氛圍。",
           "next": "午餐",
@@ -777,22 +799,25 @@
           "highlight": true,
           "lat": 34.6873,
           "lng": 135.5262,
-          "tags": []
+          "tags": [
+            "景點"
+          ]
         },
         {
           "time": "13:00-14:00",
           "name": "午餐 金龍拉麵 道頓堀店",
           "maps_label": "金龍拉麵 道頓堀店",
           "short_address": "1 Chome-7-26 D",
-          "type": "美食",
           "stay": "",
-          "cost": "",
-          "address": "1 Chome-7-26 Dotonbori, Chuo Ward, Osaka, 542-0077, Japan",
+          "cost": "約 NT$300 / 人",
+          "address": "大阪市中央區道頓堀1丁目7-26",
           "note": "",
           "next": "",
           "map": "https://maps.google.com/?q=Kinryu%20Ramen%20Dotonbori%2C%201%20Chome-7-26%20Dotonbori%2C%20Chuo%20Ward%2C%20Osaka%2C%20542-0077%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "美食"
+          ],
           "lat": 34.6684839,
           "lng": 135.5025905
         },
@@ -801,9 +826,8 @@
           "name": "固力果跑者 + 寶可夢中心 心齋橋 + 心齋橋逛街",
           "maps_label": "Pokémon Center Osaka DX",
           "short_address": "心齋橋",
-          "type": "購物",
           "stay": "180 分",
-          "cost": "—",
+          "cost": "",
           "address": "大阪市中央區心齋橋筋 1-7-1 大丸心齋橋本館 13F",
           "note": "固力果招牌 → 寶可夢中心 → 心齋橋筋商店街一條龍。",
           "next": "晚餐",
@@ -811,58 +835,79 @@
           "highlight": true,
           "lat": 34.6726,
           "lng": 135.5012,
-          "tags": []
+          "tags": [
+            "購物"
+          ]
         },
         {
           "time": "18:00–20:00",
           "name": "晚餐 焼肉ごりちゃん 心斎橋店",
           "maps_label": "道頓堀晚餐",
           "short_address": "中央區",
-          "type": "美食",
           "stay": "60 分",
           "cost": "約 NT$1500 / 人",
-          "address": "大阪市中央區道頓堀",
+          "address": "大阪市中央區心齋橋筋1丁目3-13 茶茶心齋橋大樓2",
           "note": "主打厚切牛舌與橫隔膜的高CP值在地人氣燒肉店。\n黑毛和牛",
           "next": "心齋橋逛街",
           "map": "https://maps.google.com/?q=Yakiniku%20Gorichan%2C%20Japan%2C%20%E3%80%92542-0085%20Osaka%2C%20Chuo%20Ward%2C%20Shinsaibashisuji%2C%201%20Chome%E2%88%923%E2%88%9213%20%E8%8C%B6%E8%8C%B6%E5%BF%83%E6%96%8E%E6%A9%8B%E3%83%93%E3%83%AB%202%E9%9A%8E",
           "highlight": false,
           "lat": 34.6687,
           "lng": 135.501,
-          "tags": []
+          "tags": [
+            "美食"
+          ]
         },
         {
           "time": "20:00-21:30",
           "name": "梅田空中庭園",
           "maps_label": "Kuchu Teien Observatory",
           "short_address": "Osaka",
-          "type": "景點",
           "stay": "",
           "cost": "",
-          "address": "Japan, 〒531-6039 Osaka, Kita Ward, Oyodonaka, 1 Chome−1−88 梅田スカイビル",
-          "note": "大阪市區經典高空景觀台，360度視野搭配日落與夜景最值得。",
+          "address": "大阪市北區大淀中1丁目1-88 梅田空中庭園大樓（梅田藍天大廈）",
+          "note": "大阪市區經典高空景觀台，360度視野搭配日落與夜景最值得。\n\n+ 計程車：約 10–15 分",
           "next": "",
           "map": "https://maps.google.com/?q=Kuchu%20Teien%20Observatory%2C%20Japan%2C%20%E3%80%92531-6039%20Osaka%2C%20Kita%20Ward%2C%20Oyodonaka%2C%201%20Chome%E2%88%921%E2%88%9288%20%E6%A2%85%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%93%E3%83%AB",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "景點"
+          ],
           "lat": 34.7052927,
           "lng": 135.4905349
         },
         {
-          "time": "21:30-23:30",
+          "time": "21:30-22:30",
           "name": "宵夜 壽司 さかえすし",
           "maps_label": "宵夜 壽司 さかえすし",
           "short_address": "2-27",
-          "type": "美食",
           "stay": "",
-          "cost": "約 NT$650/人",
-          "address": "2-27 Souemoncho, Chuo Ward, Osaka, 542-0084, Japan",
+          "cost": "約 NT$650 / 人",
+          "address": "大阪市中央區宗右衛門町2-27",
           "note": "道頓堀人氣深夜壽司，平價新鮮、適合逛完順路吃一輪。",
           "next": "",
           "map": "https://maps.google.com/?q=Sakae%20Sushi%2C%202-27%20Souemoncho%2C%20Chuo%20Ward%2C%20Osaka%2C%20542-0084%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "美食"
+          ],
           "lat": 34.6698820375,
           "lng": 135.5034039875
+        },
+        {
+          "time": "22:30-23:30",
+          "name": "宵夜pt2 一蘭 道頓堀店別館",
+          "maps_label": "ICHIRAN Dotonbori -South Building-",
+          "short_address": "大阪市中央區",
+          "stay": "",
+          "cost": "約 NT$300 / 人",
+          "address": "大阪市中央區道頓堀1丁目4-16",
+          "tags": [],
+          "note": "主打一人一格專心吃麵的拉麵店，豚骨湯頭濃郁、口味可客製，是道頓堀宵夜排隊名店。",
+          "next": "",
+          "map": "https://maps.google.com/?q=ICHIRAN%20Dotonbori%20-South%20Building-%2C%201%20Chome-4-16%20Dotonbori%2C%20Chuo%20Ward%2C%20Osaka%2C%20542-0071%2C%20Japan",
+          "highlight": false,
+          "lat": 34.6677924,
+          "lng": 135.5029769
         }
       ]
     },
@@ -878,7 +923,6 @@
           "name": "通天閣 + 新世界市場",
           "maps_label": "通天閣",
           "short_address": "浪速區",
-          "type": "景點",
           "stay": "120 分",
           "cost": "1,000 円",
           "address": "大阪市浪速區惠美須東 1-18-6",
@@ -888,22 +932,25 @@
           "highlight": true,
           "lat": 34.6525,
           "lng": 135.5063,
-          "tags": []
+          "tags": [
+            "景點"
+          ]
         },
         {
           "time": "11:30-12:30",
           "name": "飯店退房整裝",
           "maps_label": "Hotel Granvia Osaka",
           "short_address": "3 Chome-1-1 Um",
-          "type": "交通",
           "stay": "",
           "cost": "",
-          "address": "3 Chome-1-1 Umeda, Kita Ward, Osaka, 530-0001, Japan",
+          "address": "大阪市北區梅田3丁目1-1",
           "note": "行李可以先借放飯店櫃台，到附近吃午餐後再回來取行李。",
           "next": "",
           "map": "https://maps.google.com/?q=Hotel%20Granvia%20Osaka%2C%203%20Chome-1-1%20Umeda%2C%20Kita%20Ward%2C%20Osaka%2C%20530-0001%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "交通"
+          ],
           "lat": 34.7014952,
           "lng": 135.4970875
         },
@@ -912,15 +959,16 @@
           "name": "敘敘院 梅田店",
           "maps_label": "敘敘院 梅田店",
           "short_address": "梅田",
-          "type": "美食",
           "stay": "120 分",
           "cost": "約 NT$1500 / 人",
-          "address": "大阪市北區",
+          "address": "大阪市北區梅田3丁目1-3 LUCUA 大阪10樓",
           "note": "+ 敘敘苑 梅田店：日本知名高級燒肉品牌，主打高品質和牛與舒適用餐環境，適合悠閒享受一餐。\n+ 吃完可以周邊逛逛(1小時左右自由活動)回飯店拿行李 → 出發難波(15:30)。",
           "next": "晚餐",
           "map": "https://maps.google.com/?q=Jojoen%20LUCUA%20Osaka%2C%20Japan%2C%20%E3%80%92530-0001%20Osaka%2C%20Kita%20Ward%2C%20Umeda%2C%203%20Chome%E2%88%921%E2%88%923%20%E3%83%AB%E3%82%AF%E3%82%A2%2010F",
           "highlight": true,
-          "tags": [],
+          "tags": [
+            "美食"
+          ],
           "lat": 34.7052911,
           "lng": 135.4983887
         },
@@ -929,15 +977,16 @@
           "name": "神奇寶貝中心 大阪店",
           "maps_label": "神奇寶貝中心 大阪店",
           "short_address": "Osaka",
-          "type": "購物",
           "stay": "",
           "cost": "",
-          "address": "Japan, 〒530-8373 Osaka, Kita Ward, Umeda, 3 Chome−1−1 ルクア サウス 13F",
+          "address": "大阪市北區梅田3丁目1-1 LUCUA South 13樓",
           "note": "👉 在大丸百貨（大阪站旁）\n👉 從 敘敘苑 梅田店 走路約 5～10 分鐘\n👉 逛 30～60 分鐘剛好",
           "next": "",
           "map": "https://maps.google.com/?q=Pok%C3%A9mon%20Center%20Osaka%2C%20Japan%2C%20%E3%80%92530-8373%20Osaka%2C%20Kita%20Ward%2C%20Umeda%2C%203%20Chome%E2%88%921%E2%88%921%20%E3%83%AB%E3%82%AF%E3%82%A2%20%E3%82%B5%E3%82%A6%E3%82%B9%2013F",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "購物"
+          ],
           "lat": 34.7017035,
           "lng": 135.4964315
         },
@@ -946,15 +995,16 @@
           "name": "holo 梅田店",
           "maps_label": "holo 梅田店",
           "short_address": "Osaka",
-          "type": "購物",
           "stay": "",
           "cost": "",
-          "address": "Japan, 〒530-0012 Osaka, Kita Ward, Shibata, 1 Chome−1−3 阪急三番街 北館 地下1階",
+          "address": "大阪市北區芝田1丁目1-3 阪急三番街北館地下1樓",
           "note": "👉 在 HEP FIVE 或附近商場\n👉 走路 10 分鐘內\n👉 逛 20～40 分鐘",
           "next": "",
           "map": "https://maps.google.com/?q=hololive%20production%20official%20shop%20in%20Osaka%20Umeda%2C%20Japan%2C%20%E3%80%92530-0012%20Osaka%2C%20Kita%20Ward%2C%20Shibata%2C%201%20Chome%E2%88%921%E2%88%923%20%E9%98%AA%E6%80%A5%E4%B8%89%E7%95%AA%E8%A1%97%20%E5%8C%97%E9%A4%A8%20%E5%9C%B0%E4%B8%8B1%E9%9A%8E",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "購物"
+          ],
           "lat": 34.7059288,
           "lng": 135.4982569
         },
@@ -963,15 +1013,16 @@
           "name": "出發難波",
           "maps_label": "Umeda Station",
           "short_address": "8-6",
-          "type": "交通",
           "stay": "",
           "cost": "",
-          "address": "8-6 Kakudacho, Kita Ward, Osaka, 530-0017, Japan",
+          "address": "大阪市北區角田町8-6",
           "note": "1️⃣ 從飯店下樓 → 進「大阪站」\n👉 找指標：地下鐵 / Subway / 御堂筋線\n\n2️⃣ 走到\n👉 大阪地鐵御堂筋線 梅田站\n\n（在地下，跟JR不同）\n\n3️⃣ 搭車方向選：\n👉 往「なんば / Namba」方向\n\n4️⃣ 坐約 15 分鐘\n👉 到\n👉 難波站",
           "next": "",
           "map": "https://maps.google.com/?q=Umeda%20Station%2C%208-6%20Kakudacho%2C%20Kita%20Ward%2C%20Osaka%2C%20530-0017%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "交通"
+          ],
           "lat": 34.7025989,
           "lng": 135.4980864
         },
@@ -980,15 +1031,16 @@
           "name": "機場前最後晚餐  難波CITY",
           "maps_label": "難波CITY",
           "short_address": "難波",
-          "type": "美食",
           "stay": "60 分",
-          "cost": "約 1,200 円 / 人",
-          "address": "大阪市中央區",
+          "cost": "約 NT$200 / 人",
+          "address": "大阪市中央區難波5丁目1-60",
           "note": "建議在難波吃完再搭 Rapi:t 進機場，免得吃太貴。\n難波CITY裡面美食廣場找東西吃\n👉 好處：\n+ 不會迷路\n+ 吃完直接上車\n+ 不會錯過 Rapi:t\n\n👉 建議：\n\n+ 松屋 / 拉麵 / 定食\n+ 抓 30～45 分鐘",
           "next": "前往機場",
-          "map": "https://maps.google.com/?q=Namba%20City%2C%205%20Chome-1-60%20Namba%2C%20Chuo%20Ward%2C%20Osaka%2C%20542-0076%2C%20Japan",
+          "map": "https://maps.google.com/?q=%E3%81%AA%E3%82%93%E3%81%B0CITY",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "美食"
+          ],
           "lat": 34.6661554,
           "lng": 135.5002995
         },
@@ -996,22 +1048,23 @@
           "time": "17:30–18:30",
           "name": "南海電鐵 Rapi:t 前往機場",
           "maps_label": "Rapi:t 機場特急",
-          "type": "交通",
           "stay": "60 分",
-          "cost": "約 ¥1,490 / 人 （含車票＋特急券）",
+          "cost": "約 NT$300 / 人（含車票＋特急券）",
           "note": "+ 現場買 自動售票機選「Rapi:t」\n+ 車程 38 分鐘，建議 18:30 前抵達 T1 報到。\n+ 下車就是機場 跟著「Departure」走去報到",
           "next": "關西機場 T1 報到",
           "map": "https://maps.google.com/?q=Namba%20Station%2C%205%20Chome-1%E7%95%AA60%E5%8F%B7%20Namba%2C%20Chuo%20Ward%2C%20Osaka%2C%20542-8503%2C%20Japan",
           "highlight": false,
-          "tags": [],
+          "tags": [
+            "交通"
+          ],
           "lat": 34.6661554,
-          "lng": 135.5002995
+          "lng": 135.5002995,
+          "address": "大阪市中央區難波5丁目1番60號"
         },
         {
           "time": "18:30–20:55",
           "name": "關西國際機場 T1 報到",
           "maps_label": "KIX Terminal 1",
-          "type": "交通",
           "stay": "145 分",
           "cost": "—",
           "note": "AirAsia 在 T1，記得退稅、寄艙。",
@@ -1019,14 +1072,16 @@
           "map": "https://maps.google.com/?q=34.4347,135.2440",
           "highlight": false,
           "lat": 34.4347,
-          "lng": 135.244
+          "lng": 135.244,
+          "tags": [
+            "交通"
+          ]
         },
         {
           "time": "20:55–23:05",
           "name": "D7378 全亞洲航空",
           "maps_label": "AirAsia D7378",
           "short_address": "關西 → 桃園",
-          "type": "航班",
           "stay": "130 分",
           "cost": "NT$4,000 / 人",
           "address": "",
@@ -1034,7 +1089,9 @@
           "next": "回家",
           "map": "",
           "highlight": true,
-          "tags": []
+          "tags": [
+            "航班"
+          ]
         }
       ]
     }
@@ -1110,7 +1167,7 @@
     },
     {
       "url": "https://tabelog.com/tw/kyoto/A2601/A260301/26041607/",
-      "title": "",
+      "title": "鮨麻布 東山 - 祇園四條/壽司 | Tabelog",
       "source": "auto",
       "stopRef": "day:day2:3",
       "stopName": "午餐 鮨麻布 東山"
@@ -1120,7 +1177,7 @@
       "title": "booking Hotel Granvia Osaka-JR Hotel Group",
       "source": "auto",
       "stopRef": "day:day3:1",
-      "stopName": "大阪格蘭比亞大酒店 checkin",
+      "stopName": "大阪格蘭比亞酒店 Check-in",
       "titleManual": true
     }
   ],
