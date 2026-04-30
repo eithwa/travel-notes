@@ -248,10 +248,22 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 }
 @media (max-width:780px){.meta{grid-template-columns:1fr 1fr}.main-tab{min-width:100px;padding:10px 12px;font-size:13px}}
 @media (max-width:640px){.wrap{padding:14px}.hero h1{font-size:26px}.meta{grid-template-columns:1fr}}
+
+/* Google Drive 同步區塊 */
+.drive-zone{flex:1 1 100%;min-width:280px;border:1px solid rgba(255,255,255,.4);border-radius:18px;padding:12px 16px;background:rgba(255,255,255,.12);display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.drive-zone .drive-icon{font-size:22px;line-height:1}
+.drive-zone .drive-info{flex:1;min-width:200px}
+.drive-zone .drive-title{font-weight:800;font-size:14px}
+.drive-zone .drive-sub{font-size:12px;opacity:.92;margin-top:2px;word-break:break-all}
+.drive-zone .drive-actions{display:flex;flex-wrap:wrap;gap:6px}
+.auto-save-toggle{display:inline-flex;align-items:center;gap:6px;color:#fff;font-size:13px;cursor:pointer;padding:6px 12px;background:rgba(255,255,255,.12);border-radius:12px;border:1px solid rgba(255,255,255,.3)}
+.auto-save-toggle input{accent-color:#fff;cursor:pointer}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+<script defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 </head>
 <body>
 <div class="wrap">
@@ -267,6 +279,23 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
       <div class="box"><div class="small">住宿安排</div><div id="nights"></div></div>
     </div>
     <div class="hero-actions">
+      <!-- Google Drive 同步區塊 -->
+      <div class="drive-zone" id="driveZone">
+        <div class="drive-icon">☁️</div>
+        <div class="drive-info">
+          <div class="drive-title">Google Drive 同步</div>
+          <div class="drive-sub" id="driveStatus">未連線</div>
+        </div>
+        <div class="drive-actions">
+          <button class="btn secondary" id="driveSignInBtn" type="button">以 Google 登入</button>
+          <button class="btn secondary" id="drivePickBtn" type="button" hidden>選現有檔案</button>
+          <button class="btn secondary" id="driveNewBtn" type="button" hidden>建立新檔</button>
+          <button class="btn secondary" id="driveSaveBtn" type="button" hidden>立即儲存</button>
+          <label class="auto-save-toggle" id="autoSaveLabel" hidden><input type="checkbox" id="autoSaveChk" checked /> 自動儲存</label>
+          <button class="btn ghost" id="driveSignOutBtn" type="button" hidden>登出</button>
+        </div>
+      </div>
+
       <label class="dropzone" id="dropzone" for="fileInput">
         <div class="drop-main">
           <div class="drop-title">拖曳或選擇 JSON 以更新資料</div>
@@ -352,6 +381,30 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 <script>
 // ============== 全域狀態與常數 ==============
 const STORAGE_KEY = 'travel-notes-data-v1';
+const DRIVE_KEY   = 'travel-notes-drive-v1';
+
+// ============== Google Drive 設定 ==============
+// 使用前請到 https://console.cloud.google.com/ 申請 OAuth Client ID 與 API Key
+// 然後填入下面兩個欄位即可。詳細步驟見 README。
+const GOOGLE_CONFIG = {
+  CLIENT_ID: '',  // 例: '1234567890-abcdefg.apps.googleusercontent.com'
+  API_KEY:   '',  // 例: 'AIzaSyA...'
+  SCOPES:    'https://www.googleapis.com/auth/drive.file',
+  DISCOVERY_DOC: 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'
+};
+
+const driveState = {
+  gapiInited: false,
+  gisInited:  false,
+  tokenClient: null,
+  accessToken: null,
+  fileId:   null,
+  fileName: null,
+  userEmail: null,
+  saving: false,
+  dirty:  false,
+  saveTimer: null
+};
 
 const state = {
   data: null,
@@ -452,9 +505,253 @@ function getMap(item){
 }
 
 // ============== 儲存層 ==============
-function saveData(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){} }
+function saveData(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
+  // 若有連線 Drive，排程自動儲存
+  scheduleDriveAutoSave();
+}
 function loadStored(){ try{ const t = localStorage.getItem(STORAGE_KEY); return t ? JSON.parse(t) : null; }catch{ return null; } }
 function clearStored(){ try{ localStorage.removeItem(STORAGE_KEY); }catch{} }
+
+// ============== Google Drive 同步 ==============
+function loadDriveSettings(){
+  try{
+    const s = JSON.parse(localStorage.getItem(DRIVE_KEY) || 'null');
+    if(s && s.fileId){
+      driveState.fileId = s.fileId;
+      driveState.fileName = s.fileName || 'trip.json';
+    }
+  }catch(e){}
+}
+function saveDriveSettings(){
+  if(driveState.fileId){
+    localStorage.setItem(DRIVE_KEY, JSON.stringify({ fileId: driveState.fileId, fileName: driveState.fileName }));
+  }else{
+    localStorage.removeItem(DRIVE_KEY);
+  }
+}
+function setDriveStatus(text){ const el = $('#driveStatus'); if(el) el.textContent = text; }
+function updateDriveUI(){
+  const signedIn = !!driveState.accessToken;
+  const hasFile  = !!driveState.fileId;
+  const $i = id => $('#'+id);
+  if(!$i('driveSignInBtn')) return;
+  $i('driveSignInBtn').hidden  = signedIn;
+  $i('drivePickBtn').hidden    = !signedIn;
+  $i('driveNewBtn').hidden     = !signedIn;
+  $i('driveSaveBtn').hidden    = !signedIn || !hasFile;
+  $i('driveSignOutBtn').hidden = !signedIn;
+  $i('autoSaveLabel').hidden   = !signedIn || !hasFile;
+  if(!signedIn){
+    setDriveStatus(GOOGLE_CONFIG.CLIENT_ID ? '未連線（按「以 Google 登入」開始）' : '未設定 CLIENT_ID／API_KEY');
+  }else if(!hasFile){
+    setDriveStatus(`已登入${driveState.userEmail ? '：' + driveState.userEmail : ''}｜請選或新建 trip.json`);
+  }else{
+    setDriveStatus(`📄 ${driveState.fileName}${driveState.dirty ? '（未儲存）' : '（已同步）'}`);
+  }
+}
+
+// 由 <script onload> 觸發。要放在 global，所以 window 也宣告一次
+function gapiLoaded(){ gapi.load('client:picker', initializeGapiClient); }
+window.gapiLoaded = gapiLoaded;
+async function initializeGapiClient(){
+  if(!GOOGLE_CONFIG.API_KEY){ updateDriveUI(); return; }
+  try{
+    await gapi.client.init({
+      apiKey: GOOGLE_CONFIG.API_KEY,
+      discoveryDocs: [GOOGLE_CONFIG.DISCOVERY_DOC]
+    });
+    driveState.gapiInited = true;
+  }catch(err){
+    console.error('gapi init failed', err);
+    setDriveStatus('Google API 初始化失敗，請檢查 API_KEY');
+  }
+}
+function gisLoaded(){
+  if(!GOOGLE_CONFIG.CLIENT_ID){ updateDriveUI(); return; }
+  try{
+    driveState.tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CONFIG.CLIENT_ID,
+      scope: GOOGLE_CONFIG.SCOPES,
+      callback: '' // 動態指定
+    });
+    driveState.gisInited = true;
+  }catch(err){
+    console.error('GIS init failed', err);
+    setDriveStatus('Google 登入元件初始化失敗，請檢查 CLIENT_ID');
+  }
+}
+window.gisLoaded = gisLoaded;
+
+async function handleDriveSignIn(){
+  if(!GOOGLE_CONFIG.CLIENT_ID || !GOOGLE_CONFIG.API_KEY){
+    alert('請先在 index.html 的 GOOGLE_CONFIG 填入 CLIENT_ID 與 API_KEY。\n申請步驟見 README。');
+    return;
+  }
+  if(!driveState.gapiInited || !driveState.gisInited){
+    alert('Google API 還在載入中，請稍後再試（檢查網路）');
+    return;
+  }
+  driveState.tokenClient.callback = async (resp) => {
+    if(resp.error){ setDriveStatus('登入失敗：' + resp.error); return; }
+    driveState.accessToken = resp.access_token;
+    // 取得使用者 email 顯示用
+    try{
+      const r = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+        headers: { Authorization: 'Bearer ' + resp.access_token }
+      });
+      if(r.ok){ const u = await r.json(); driveState.userEmail = u.email; }
+    }catch(e){}
+    // 自動載入上次選定的檔案
+    if(driveState.fileId){
+      await loadFromDriveById(driveState.fileId);
+    }
+    updateDriveUI();
+  };
+  driveState.tokenClient.requestAccessToken({ prompt: driveState.accessToken ? '' : 'consent' });
+}
+
+function handleDriveSignOut(){
+  if(driveState.accessToken){
+    try{ google.accounts.oauth2.revoke(driveState.accessToken, () => {}); }catch(e){}
+  }
+  driveState.accessToken = null;
+  driveState.userEmail = null;
+  // 不清除 fileId，下次登入仍會自動載入
+  updateDriveUI();
+}
+
+function showDrivePicker(){
+  if(!driveState.accessToken){ alert('請先登入'); return; }
+  const view = new google.picker.DocsView()
+    .setMimeTypes('application/json,text/plain,application/octet-stream')
+    .setIncludeFolders(true)
+    .setSelectFolderEnabled(false);
+  const picker = new google.picker.PickerBuilder()
+    .setOAuthToken(driveState.accessToken)
+    .setDeveloperKey(GOOGLE_CONFIG.API_KEY)
+    .addView(view)
+    .setTitle('選擇 trip.json')
+    .setCallback(async data => {
+      if(data.action === google.picker.Action.PICKED){
+        const f = data.docs[0];
+        await loadFromDriveById(f.id, f.name);
+      }
+    })
+    .build();
+  picker.setVisible(true);
+}
+
+async function loadFromDriveById(fileId, name){
+  if(!driveState.accessToken) return;
+  try{
+    setDriveStatus('讀取 Drive 檔案中…');
+    // 先取 metadata 拿名稱
+    let fileName = name;
+    if(!fileName){
+      const meta = await gapi.client.drive.files.get({ fileId, fields: 'name' });
+      fileName = meta.result.name;
+    }
+    // 取內容
+    const res = await gapi.client.drive.files.get({ fileId, alt: 'media' });
+    let parsed;
+    try{ parsed = typeof res.body === 'string' ? JSON.parse(res.body) : res.result; }
+    catch(e){ throw new Error('檔案內容不是有效的 JSON'); }
+    driveState.fileId = fileId;
+    driveState.fileName = fileName;
+    driveState.dirty = false;
+    saveDriveSettings();
+    // 直接寫入畫面（避開 saveData 觸發自動儲存的循環）
+    state.data = parsed;
+    state.activeDay = parsed.days?.[0]?.key || '';
+    state.activeStay = parsed.stay_groups?.[0]?.key || '';
+    state.activeShop = parsed.shop_groups?.[0]?.key || '';
+    state.editing = null;
+    state.currentMapId = '';
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
+    renderAll();
+    setTimeout(() => tryResolveShortMaps(), 200);
+    setStatus('已從 Google Drive 載入：' + fileName);
+    updateDriveUI();
+  }catch(err){
+    console.error(err);
+    setDriveStatus('讀取失敗：' + (err.result?.error?.message || err.message || '未知'));
+    if(err.status === 401){ handleDriveSignOut(); }
+  }
+}
+
+async function createNewDriveFile(){
+  if(!driveState.accessToken){ alert('請先登入'); return; }
+  if(!state.data){ alert('沒有資料可儲存'); return; }
+  const name = prompt('請輸入要建立的檔案名稱（會放在 Google Drive 我的雲端硬碟根目錄）', 'trip.json');
+  if(!name) return;
+  try{
+    setDriveStatus('建立 Drive 檔案中…');
+    const metadata = { name, mimeType: 'application/json' };
+    const content = JSON.stringify(state.data, null, 2);
+    const boundary = '-------drive-boundary-' + Date.now();
+    const delim = '\r\n--' + boundary + '\r\n';
+    const closeDelim = '\r\n--' + boundary + '--';
+    const body =
+      delim + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) +
+      delim + 'Content-Type: application/json\r\n\r\n' + content +
+      closeDelim;
+    const res = await gapi.client.request({
+      path: '/upload/drive/v3/files',
+      method: 'POST',
+      params: { uploadType: 'multipart' },
+      headers: { 'Content-Type': 'multipart/related; boundary="' + boundary + '"' },
+      body
+    });
+    driveState.fileId = res.result.id;
+    driveState.fileName = res.result.name;
+    driveState.dirty = false;
+    saveDriveSettings();
+    updateDriveUI();
+    alert('已在你的 Google Drive 建立「' + driveState.fileName + '」\n之後其他旅伴可以用「選現有檔案」載入此檔案（你需要先在 Drive 將檔案分享給他們）。');
+  }catch(err){
+    console.error(err);
+    setDriveStatus('建立失敗：' + (err.result?.error?.message || err.message || '未知'));
+  }
+}
+
+async function saveToDrive(){
+  if(!driveState.accessToken || !driveState.fileId) return;
+  if(!state.data) return;
+  if(driveState.saving) return;
+  driveState.saving = true;
+  try{
+    setDriveStatus('儲存中…');
+    const content = JSON.stringify(state.data, null, 2);
+    await gapi.client.request({
+      path: '/upload/drive/v3/files/' + driveState.fileId,
+      method: 'PATCH',
+      params: { uploadType: 'media' },
+      headers: { 'Content-Type': 'application/json' },
+      body: content
+    });
+    driveState.dirty = false;
+    updateDriveUI();
+    setDriveStatus('✓ 已同步到 ' + driveState.fileName + '（' + new Date().toLocaleTimeString() + '）');
+  }catch(err){
+    console.error(err);
+    setDriveStatus('儲存失敗：' + (err.result?.error?.message || err.message || '未知'));
+    if(err.status === 401){ handleDriveSignOut(); }
+  }finally{
+    driveState.saving = false;
+  }
+}
+
+// 在 saveData 變動時排程一次自動儲存（debounce 4 秒，避免每次按鍵都打 API）
+function scheduleDriveAutoSave(){
+  if(!driveState.accessToken || !driveState.fileId) return;
+  const chk = $('#autoSaveChk');
+  if(chk && !chk.checked) return;
+  driveState.dirty = true;
+  updateDriveUI();
+  clearTimeout(driveState.saveTimer);
+  driveState.saveTimer = setTimeout(saveToDrive, 4000);
+}
 
 function setData(newData){
   state.data = newData;
@@ -3412,6 +3709,16 @@ $('#mapSubTabs').addEventListener('click', e => {
 $('#fileInput').addEventListener('change', e => loadJsonFile(e.target.files[0]));
 $('#exportBtn').addEventListener('click', exportJson);
 $('#resetBtn').addEventListener('click', resetToDefault);
+
+// Google Drive 按鈕綁定
+$('#driveSignInBtn').addEventListener('click', handleDriveSignIn);
+$('#driveSignOutBtn').addEventListener('click', handleDriveSignOut);
+$('#drivePickBtn').addEventListener('click', showDrivePicker);
+$('#driveNewBtn').addEventListener('click', createNewDriveFile);
+$('#driveSaveBtn').addEventListener('click', saveToDrive);
+
+loadDriveSettings();
+updateDriveUI();
 $('#editToggle').addEventListener('click', () => {
   state.editMode = !state.editMode;
   state.editing = null;
