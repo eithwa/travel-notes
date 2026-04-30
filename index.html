@@ -17,13 +17,15 @@ body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:linear-gradient(1
 .hero-edit-btn{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0}
 .hero-edit-btn:hover{background:rgba(255,255,255,.3)}
 body:not(.edit-mode) .hero-edit-btn{display:none}
-.hero-collapse-btn{position:absolute;top:20px;right:20px;height:36px;padding:0 12px;border-radius:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.hero-top-actions{position:absolute;top:20px;right:20px;display:flex;gap:8px;align-items:center;z-index:1}
+body.edit-mode .hero-top-actions{right:64px}
+.hero-collapse-btn{height:36px;padding:0 12px;border-radius:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700}
 .hero-collapse-btn:hover{background:rgba(255,255,255,.3)}
+.hero-top-actions .edit-toggle{height:36px;padding:0 12px;font-size:13px}
 .hero.collapsed{padding:18px 20px}
 .hero.collapsed .hero-content{display:none}
-.hero.collapsed h1{margin:0;font-size:24px;padding-right:88px}
+.hero.collapsed h1{margin:0;font-size:24px;padding-right:200px}
 .hero.collapsed .hero-edit-btn{display:none}
-body.edit-mode .hero-collapse-btn{right:64px}
 #tripEditContainer:empty{display:none}
 #tripEditContainer{margin-top:16px}
 .hero h1{margin:0 0 8px;font-size:34px}
@@ -242,7 +244,8 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 .ref-title{font-weight:800;font-size:15px;line-height:1.4}
 .ref-title a{color:var(--text);text-decoration:none}
 .ref-title a:hover{color:var(--accent);text-decoration:underline}
-.ref-url{color:var(--muted);font-size:12px;word-break:break-all;margin-top:4px}
+.ref-url{color:var(--muted);font-size:12px;word-break:break-all;margin-top:4px;display:none}
+body.edit-mode .ref-url{display:block}
 .ref-loading{color:var(--muted);font-style:italic}
 .ref-card{cursor:pointer}
 .ref-card:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(37,99,235,.1);border-color:#93c5fd}
@@ -270,7 +273,87 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
   .map-canvas{height:400px}
   #mapSubContent{max-height:none;overflow:visible;padding:0}
 }
-@media (max-width:780px){.meta{grid-template-columns:1fr 1fr}.main-tab{min-width:100px;padding:10px 12px;font-size:13px}}
+
+/* sheet handle 預設隱藏（桌面版用不到） */
+.sheet-handle{display:none}
+
+@media (max-width:780px){
+  .meta{grid-template-columns:1fr 1fr}
+  .main-tab{min-width:100px;padding:10px 12px;font-size:13px}
+
+  /* 平常瀏覽時隱藏藍色 main-tabs，編輯模式才顯示 */
+  body:not(.edit-mode) .main-tabs{display:none}
+  body:not(.edit-mode) #panel-map{margin-top:14px}
+
+  /* 手機版地圖改成 Google Maps 風格：地圖滿版 + 底部可拉動 sheet */
+  #panel-map .map-shell{display:block;gap:0;margin:0 -14px}
+  #panel-map .map-frame-wrap{position:relative;height:calc(100vh - 160px);min-height:320px}
+  #panel-map .map-canvas{height:100%;border-radius:0;min-height:0}
+  #panel-map .map-canvas.fav-canvas{height:100%}
+  #panel-map iframe{height:100%}
+
+  /* 底部 sheet：浮在地圖上方，可往上拉顯示更多列表 */
+  #panel-map .map-side{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:var(--sheet-h, 45vh);
+    max-height:92vh;
+    background:#fff;
+    border-radius:18px 18px 0 0;
+    box-shadow:0 -8px 28px rgba(0,0,0,.18);
+    z-index:50;
+    transition:height .25s cubic-bezier(.4,0,.2,1);
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  #panel-map .map-side.dragging{transition:none}
+
+  /* 拖曳手柄（上邊緣中央的小橫槓） */
+  .sheet-handle{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:10px 0 8px;
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+    -webkit-user-select:none;
+    flex-shrink:0;
+  }
+  .sheet-handle::before{
+    content:'';
+    width:42px;
+    height:5px;
+    border-radius:3px;
+    background:#cbd5e1;
+    transition:background .15s;
+  }
+  .sheet-handle:hover::before,
+  .sheet-handle:active::before{background:#94a3b8}
+  .sheet-handle:active{cursor:grabbing}
+
+  /* sub-tabs sticky 在 sheet 頂部（手柄下方） */
+  #panel-map .map-side .sub-tabs{
+    position:sticky;
+    top:0;
+    background:#fff;
+    z-index:2;
+    padding:0 14px 6px;
+    margin-bottom:8px;
+    flex-shrink:0;
+  }
+  #panel-map #mapSubContent{
+    flex:1;
+    overflow-y:auto;
+    padding:0 14px 14px;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+
 @media (max-width:640px){.wrap{padding:14px}.hero h1{font-size:26px}.meta{grid-template-columns:1fr}}
 
 /* Google Drive 同步區塊 */
@@ -293,7 +376,10 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 <div class="wrap">
   <!-- Hero -->
   <div class="hero" data-edit-id="trip">
-    <button class="hero-collapse-btn" id="heroCollapseBtn" type="button">展開</button>
+    <div class="hero-top-actions">
+      <button class="btn ghost edit-toggle" id="editToggle" type="button">編輯模式：關</button>
+      <button class="hero-collapse-btn" id="heroCollapseBtn" type="button">展開</button>
+    </div>
     <button class="hero-edit-btn" id="heroEditBtn" title="編輯標題與基本資料"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 17.46V21h3.54l10.4-10.4-3.54-3.54L3 17.46zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button>
     <h1 id="title">讀取中…</h1>
     <div class="hero-content" id="heroContent">
@@ -330,7 +416,6 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
           </div>
           <span class="btn secondary">選擇 JSON</span>
         </label>
-        <button class="btn ghost edit-toggle" id="editToggle">編輯模式：關</button>
         <button class="btn ghost" id="exportBtn">匯出 JSON</button>
         <button class="btn ghost" id="resetBtn">重置為預設</button>
         <span class="status" id="loadStatus">載入中</span>
@@ -366,7 +451,8 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
         </div>
         <div id="mapFocus" style="display:none"></div>
       </div>
-      <div class="map-side">
+      <div class="map-side" id="mapSide">
+        <div class="sheet-handle" id="mapSheetHandle" aria-label="拖曳調整列表高度"></div>
         <div class="sub-tabs" id="mapSubTabs">
           <button class="sub-tab active" data-sub="days">每日行程</button>
           <button class="sub-tab" data-sub="all">所有地點</button>
@@ -1024,11 +1110,41 @@ function focusMap(id){
   state.currentMapId = id;
   if(loc.stopid) state.activeStopId = loc.stopid;
   state.mapMode = 'single';
-  useGoogleIframe();
-  const frame = $('#mapFrame');
-  const newSrc = buildSingleEmbedSrc(loc);
-  if(frame.src !== newSrc) frame.src = newSrc;
+  // 手機版（<=780px）+ 有座標 → 改用 Leaflet 顯示單點，避免 Google iframe 強制兩指拖動
+  if(isMobileView() && loc.lat != null && loc.lng != null){
+    showSinglePointOnLeaflet(loc);
+  } else {
+    useGoogleIframe();
+    const frame = $('#mapFrame');
+    const newSrc = buildSingleEmbedSrc(loc);
+    if(frame.src !== newSrc) frame.src = newSrc;
+  }
   highlightActiveMap();
+}
+
+// 視窗寬度 <=780 視為手機版
+function isMobileView(){
+  return window.innerWidth <= 780;
+}
+
+// 手機版單點顯示：放一個 marker 在 Leaflet 上，可單指拖動
+function showSinglePointOnLeaflet(loc){
+  const map = ensureLeafletInit();
+  if(!map) return;
+  setMapMode('leaflet');
+  if(leafletLayer) leafletLayer.clearLayers();
+  allDayStopMarkers.clear();
+
+  const marker = L.marker([loc.lat, loc.lng], { icon: makeNumberedMarker(1, 1) });
+  const mapsLink = nonEmpty(loc.map) ? loc.map : `https://www.google.com/maps?q=${loc.lat},${loc.lng}`;
+  marker.bindPopup(`
+    <div class="pop-title">${escapeHtml(loc.title || '(未命名)')}</div>
+    ${nonEmpty(loc.fullAddress || loc.address) ? `<div class="pop-meta">📍 ${escapeHtml(loc.fullAddress || loc.address)}</div>` : ''}
+    <div style="margin-top:6px"><a href="${escapeHtml(mapsLink)}" target="_blank" rel="noopener noreferrer">在 Google Maps 開啟</a></div>
+  `);
+  marker.addTo(leafletLayer);
+  map.setView([loc.lat, loc.lng], 16);
+  setTimeout(() => map.invalidateSize(), 60);
 }
 
 // 為單一地點挑選最佳的 iframe URL。
@@ -4054,6 +4170,91 @@ dropzone.addEventListener('drop', e => {
   const f = [...(e.dataTransfer?.files||[])].find(x => /\.json$/i.test(x.name) || (x.type && x.type.includes('json')));
   loadJsonFile(f);
 });
+
+// 視窗尺寸變化（旋轉、桌面/手機之間切換）：重新套用地圖模式
+let __resizeTimer = null;
+window.addEventListener('resize', () => {
+  if(__resizeTimer) clearTimeout(__resizeTimer);
+  __resizeTimer = setTimeout(() => {
+    if(state.activeMain === 'map'){
+      applyMapView();
+    }
+    if(leafletMap) leafletMap.invalidateSize();
+  }, 200);
+});
+
+// 手機版底部 sheet 拖曳：可往上拉顯示更多列表內容
+(function initMapSheetDrag(){
+  const handle = document.getElementById('mapSheetHandle');
+  const sheet = document.getElementById('mapSide');
+  if(!handle || !sheet) return;
+
+  let startY = 0;
+  let startH = 0;
+  let dragging = false;
+
+  const getY = (e) => (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
+  const vh = () => window.innerHeight;
+
+  // 三段吸附位置（佔螢幕高比例）
+  const SNAP = { low: 0.18, mid: 0.45, high: 0.85 };
+
+  function snap(h){
+    const r = h / vh();
+    let target;
+    if(r < (SNAP.low + SNAP.mid) / 2) target = SNAP.low;
+    else if(r < (SNAP.mid + SNAP.high) / 2) target = SNAP.mid;
+    else target = SNAP.high;
+    sheet.style.setProperty('--sheet-h', (vh() * target) + 'px');
+  }
+
+  function onStart(e){
+    if(!isMobileView()) return;
+    dragging = true;
+    startY = getY(e);
+    startH = sheet.offsetHeight;
+    sheet.classList.add('dragging');
+    e.preventDefault();
+  }
+  function onMove(e){
+    if(!dragging) return;
+    const dy = startY - getY(e);
+    let h = startH + dy;
+    h = Math.max(60, Math.min(vh() * 0.92, h));
+    sheet.style.setProperty('--sheet-h', h + 'px');
+    e.preventDefault();
+  }
+  function onEnd(){
+    if(!dragging) return;
+    dragging = false;
+    sheet.classList.remove('dragging');
+    snap(sheet.offsetHeight);
+  }
+
+  handle.addEventListener('touchstart', onStart, { passive: false });
+  handle.addEventListener('touchmove', onMove, { passive: false });
+  handle.addEventListener('touchend', onEnd);
+  handle.addEventListener('touchcancel', onEnd);
+  handle.addEventListener('mousedown', onStart);
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onEnd);
+
+  // 點一下手柄（沒拖動）→ 在 low/mid/high 之間循環，方便快速切換
+  let downY = null;
+  handle.addEventListener('pointerdown', e => { downY = e.clientY; });
+  handle.addEventListener('pointerup', e => {
+    if(downY == null) return;
+    const moved = Math.abs(e.clientY - downY);
+    downY = null;
+    if(moved > 5 || !isMobileView()) return;
+    const r = sheet.offsetHeight / vh();
+    let next;
+    if(r < SNAP.mid - 0.05) next = SNAP.mid;
+    else if(r < SNAP.high - 0.05) next = SNAP.high;
+    else next = SNAP.low;
+    sheet.style.setProperty('--sheet-h', (vh() * next) + 'px');
+  });
+})();
 
 loadInitial();
 </script>

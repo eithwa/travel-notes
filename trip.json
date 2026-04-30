@@ -935,7 +935,7 @@
       "key": "day4",
       "label": "Day 4",
       "title": "6/3（二）大阪 → 桃園",
-      "theme": "通天閣 + 藍色雙塔 + 回程",
+      "theme": "通天閣 + 回程",
       "hero": "新世界 × 機場日落",
       "stops": [
         {
@@ -1036,7 +1036,7 @@
           "stay": "",
           "cost": "",
           "address": "大阪市北區角田町8-6",
-          "note": "1️⃣ 從飯店下樓 → 進「大阪站」\n👉 找指標：地下鐵 / Subway / 御堂筋線\n\n2️⃣ 走到\n👉 大阪地鐵御堂筋線 梅田站\n\n（在地下，跟JR不同）\n\n3️⃣ 搭車方向選：\n👉 往「なんば / Namba」方向\n\n4️⃣ 坐約 15 分鐘\n👉 到\n👉 難波站",
+          "note": "1️⃣ 從飯店下樓 → 進「大阪站」\n👉 找指標：地下鐵 / Subway / 御堂筋線\n\n2️⃣ 走到\n👉 大阪地鐵御堂筋線 梅田站\n\n（在地下，跟JR不同）\n\n3️⃣ 搭車方向選：\n👉 往「なんば / Namba」方向\n\n4️⃣ 坐約 15 分鐘\n👉 到難波站",
           "next": "",
           "map": "https://maps.google.com/?q=Umeda%20Station%2C%208-6%20Kakudacho%2C%20Kita%20Ward%2C%20Osaka%2C%20530-0017%2C%20Japan",
           "highlight": false,
