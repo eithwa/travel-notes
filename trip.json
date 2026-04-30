@@ -1,5 +1,5 @@
 {
-  "title": "大阪 × 京都 4 日散策",
+  "title": "ㄈㄓ組2026大阪京都行",
   "subtitle": "4 天 3 夜｜京都古寺 × 大阪城 × 心齋橋逛街",
   "dates": "5/31（六）– 6/3（二）",
   "travelers": 6,
@@ -603,8 +603,25 @@
           "lng": 135.7844389
         },
         {
-          "time": "12:00–13:30",
-          "name": "午餐 らーめん錦",
+          "time": "12:00-13:30",
+          "name": "午餐 鮨麻布 東山",
+          "maps_label": "鮨麻布 東山",
+          "short_address": "Kyoto",
+          "type": "美食",
+          "stay": "",
+          "cost": "約 NT$2600 / 人",
+          "address": "Japan, 〒605-0824 Kyoto, Higashiyama Ward, Yasaka Kamimachi, ３６６ 内 THE SODOH HIGASHIYAMA KYOTO",
+          "note": "主打職人手握江戶前壽司，結合精緻食材與靜謐氛圍，呈現高質感的京都壽司體驗。\nhttps://tabelog.com/tw/kyoto/A2601/A260301/26041607/",
+          "next": "",
+          "map": "https://maps.google.com/?q=Sushi%20Azabu%20Higashiyama%2C%20Japan%2C%20%E3%80%92605-0824%20Kyoto%2C%20Higashiyama%20Ward%2C%20Yasaka%20Kamimachi%2C%20%EF%BC%93%EF%BC%96%EF%BC%96%20%E5%86%85%20THE%20SODOH%20HIGASHIYAMA%20KYOTO",
+          "highlight": false,
+          "tags": [],
+          "lat": 35.0023302,
+          "lng": 135.776457
+        },
+        {
+          "time": "13:30–13:30",
+          "name": "午餐 らーめん錦 (備案)",
           "maps_label": "Ramen Nishiki",
           "short_address": "416",
           "type": "美食",
@@ -1090,6 +1107,13 @@
       "stopRef": "day:day1:2",
       "stopName": "關西國際機場 T2",
       "titleManual": true
+    },
+    {
+      "url": "https://tabelog.com/tw/kyoto/A2601/A260301/26041607/",
+      "title": "",
+      "source": "auto",
+      "stopRef": "day:day2:3",
+      "stopName": "午餐 鮨麻布 東山"
     },
     {
       "url": "https://www.booking.com/hotel/jp/granvia-osaka.zh-tw.html?aid=1288258&label=metagha-link-MRTW-hotel-241706_dev-desktop_los-1_bw-32_dow-Sunday_defdate-0_room-0_gstadt-2_rateid-tw_aud-9181518022_gacid-21404718441_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260517_ppt-G_lp-2158_r-14320554018054943261&sid=07eba64fb2983410679c0dfac0778b30&all_sr_blocks=24170796_374012663_2_2_0&checkin=2026-05-17&checkout=2026-05-18&dest_id=241706&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=24170796_374012663_2_2_0&hpos=1&matching_block_id=24170796_374012663_2_2_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=24170796_374012663_2_2_0__2365200&srepoch=1776181763&srpvid=03ce6f3a36b10538&type=total&ucfs=1&",
