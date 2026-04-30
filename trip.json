@@ -676,7 +676,7 @@
           "maps_label": "伏見稻荷大社",
           "short_address": "伏見區",
           "stay": "120 分",
-          "cost": "免費",
+          "cost": "",
           "address": "京都市伏見區深草藪之內町 68",
           "note": "千本鳥居必拍；走到四辻可拍京都全景。",
           "next": "寶可夢中心 京都店",
@@ -919,7 +919,9 @@
           "stay": "",
           "cost": "約 NT$300 / 人",
           "address": "大阪市中央區道頓堀1丁目4-16",
-          "tags": [],
+          "tags": [
+            "美食"
+          ],
           "note": "主打一人一格專心吃麵的拉麵店，豚骨湯頭濃郁、口味可客製，是道頓堀宵夜排隊名店。",
           "next": "",
           "map": "https://maps.google.com/?q=ICHIRAN%20Dotonbori%20-South%20Building-%2C%201%20Chome-4-16%20Dotonbori%2C%20Chuo%20Ward%2C%20Osaka%2C%20542-0071%2C%20Japan",

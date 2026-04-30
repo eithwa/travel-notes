@@ -567,13 +567,20 @@ function getMap(item){
 }
 
 // ============== 儲存層 ==============
+// [暫時關閉] 修改不寫入 localStorage，重整頁面會回到 trip.json 原始內容
+// 若要恢復本機自動儲存，把下方各函式內的註解區塊還原即可
 function saveData(){
-  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
+  // try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
   // 若有連線 Drive，排程自動儲存
   scheduleDriveAutoSave();
 }
-function loadStored(){ try{ const t = localStorage.getItem(STORAGE_KEY); return t ? JSON.parse(t) : null; }catch{ return null; } }
-function clearStored(){ try{ localStorage.removeItem(STORAGE_KEY); }catch{} }
+function loadStored(){
+  // try{ const t = localStorage.getItem(STORAGE_KEY); return t ? JSON.parse(t) : null; }catch{ return null; }
+  return null;
+}
+function clearStored(){
+  // try{ localStorage.removeItem(STORAGE_KEY); }catch{}
+}
 function loadHeroCollapsed(){
   try{
     const v = localStorage.getItem(HERO_COLLAPSED_KEY);
@@ -817,7 +824,8 @@ async function loadFromDriveById(fileId, name){
     state.activeShop = parsed.shop_groups?.[0]?.key || '';
     state.editing = null;
     state.currentMapId = '';
-    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
+    // [暫時關閉] 不快取到 localStorage，重整時會重新從 Drive / 預設 trip.json 載入
+    // try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data)); }catch(e){}
     renderAll();
     setTimeout(() => tryResolveShortMaps(), 200);
     setStatus('已從 Google Drive 載入：' + fileName);
