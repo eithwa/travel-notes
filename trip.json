@@ -1214,6 +1214,41 @@
     "title": "2026京都",
     "places": [
       {
+        "name": "京都拉麵研究所",
+        "address": "",
+        "lat": 34.984198299999996,
+        "lng": 135.750386,
+        "placeId": ""
+      },
+      {
+        "name": "漫天兄弟",
+        "address": "",
+        "lat": 34.9787525,
+        "lng": 135.75543,
+        "placeId": ""
+      },
+      {
+        "name": "Yakiniku Gorichan",
+        "address": "",
+        "lat": 34.673657999999996,
+        "lng": 135.501791,
+        "placeId": ""
+      },
+      {
+        "name": "ABURIYA Doutonbori-midosuji store",
+        "address": "",
+        "lat": 34.669309399999996,
+        "lng": 135.5000014,
+        "placeId": ""
+      },
+      {
+        "name": "一蘭 道頓堀店別館",
+        "address": "",
+        "lat": 34.6684219,
+        "lng": 135.5032242,
+        "placeId": ""
+      },
+      {
         "name": "Round one Umeda",
         "address": "4-16 Komatsubaracho, Kita Ward, Osaka, 530-0018日本",
         "lat": 34.703257199999996,
@@ -1524,7 +1559,7 @@
     ],
     "loading": false,
     "error": "",
-    "fetchedAt": "2026-04-30T01:06:19.291Z",
+    "fetchedAt": "2026-04-30T21:55:21.316Z",
     "geocoding": false,
     "source": "google"
   }
