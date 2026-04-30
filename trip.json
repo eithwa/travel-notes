@@ -487,7 +487,7 @@
           "maps_label": "海茵娜酒店",
           "stay": "60 分",
           "cost": "NT$2212 / 人",
-          "note": "放行李、稍作休息再出門。\n[海茵娜酒店booking](booking.com/hotel/jp/bian-nahoterujing-du-ba-tiao-kou-yi-qian.zh-tw.html?label=gog235jc-10CAEoggI46AdIMFgDaOcBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuAL4zPPOBsACAdICJDMzOTkyY2EwLTc3MjItNDYxOC1hOGNlLTNiY2E2Y2E1YzY4MtgCAeACAQ-Share-BsOQ2V%401776091791&sid=07eba64fb2983410679c0dfac0778b30&aid=397594&ucfs=1&arphpl=1&checkin=2026-05-17&checkout=2026-05-18&dest_id=-235402&dest_type=city&group_adults=6&req_adults=6&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=793c6744fbff0234&srepoch=1777473676&all_sr_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&highlighted_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&matching_block_id=461167303_140639593_2_2_0&sr_pri_blocks=461167303_140639593_2_2_0__2207450%2C461167314_140639593_2_2_0__2207450%2C461167317_238087352_2_2_0__2635000&from=searchresults)\n+ 京都：Henn na hotel \n+ 日期：5/31-6/2\n+ 雙床房*3\n+ check in 時間： 15：00-00：00\n+ check out 時間： 11：00以前\n+ 總金額：66388日幣（根據實際收款日匯率變動）",
+          "note": "放行李、稍作休息再出門。\n[海茵娜酒店booking](http://booking.com/hotel/jp/bian-nahoterujing-du-ba-tiao-kou-yi-qian.zh-tw.html?label=gog235jc-10CAEoggI46AdIMFgDaOcBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuAL4zPPOBsACAdICJDMzOTkyY2EwLTc3MjItNDYxOC1hOGNlLTNiY2E2Y2E1YzY4MtgCAeACAQ-Share-BsOQ2V%401776091791&sid=07eba64fb2983410679c0dfac0778b30&aid=397594&ucfs=1&arphpl=1&checkin=2026-05-17&checkout=2026-05-18&dest_id=-235402&dest_type=city&group_adults=6&req_adults=6&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=793c6744fbff0234&srepoch=1777473676&all_sr_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&highlighted_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&matching_block_id=461167303_140639593_2_2_0&sr_pri_blocks=461167303_140639593_2_2_0__2207450%2C461167314_140639593_2_2_0__2207450%2C461167317_238087352_2_2_0__2635000&from=searchresults)\n+ 京都：Henn na hotel \n+ 日期：5/31-6/2\n+ 雙床房*3\n+ check in 時間： 15：00-00：00\n+ check out 時間： 11：00以前\n+ 總金額：66388日幣（根據實際收款日匯率變動）",
           "next": "京都御苑",
           "map": "https://maps.google.com/?q=Henn%20na%20Hotel%20Kyoto%20Hachijoguchi%20Ekimae%2C%20Japan%2C%20%E3%80%92601-8004%20Kyoto%2C%20Minami%20Ward%2C%20Higashikujo%20Higashisannocho%2C%20%EF%BC%91%EF%BC%95",
           "highlight": false,
@@ -627,7 +627,7 @@
           "note": "主打職人手握江戶前壽司，結合精緻食材與靜謐氛圍，呈現高質感的京都壽司體驗。\n[Tabelog介紹](https://tabelog.com/tw/kyoto/A2601/A260301/26041607/)",
           "next": "",
           "map": "https://maps.google.com/?q=Sushi%20Azabu%20Higashiyama%2C%20Japan%2C%20%E3%80%92605-0824%20Kyoto%2C%20Higashiyama%20Ward%2C%20Yasaka%20Kamimachi%2C%20%EF%BC%93%EF%BC%96%EF%BC%96%20%E5%86%85%20THE%20SODOH%20HIGASHIYAMA%20KYOTO",
-          "highlight": false,
+          "highlight": true,
           "tags": [
             "美食"
           ],
@@ -850,7 +850,7 @@
           "note": "主打厚切牛舌與橫隔膜的高CP值在地人氣燒肉店。\n黑毛和牛",
           "next": "心齋橋逛街",
           "map": "https://maps.google.com/?q=Yakiniku%20Gorichan%2C%20Japan%2C%20%E3%80%92542-0085%20Osaka%2C%20Chuo%20Ward%2C%20Shinsaibashisuji%2C%201%20Chome%E2%88%923%E2%88%9213%20%E8%8C%B6%E8%8C%B6%E5%BF%83%E6%96%8E%E6%A9%8B%E3%83%93%E3%83%AB%202%E9%9A%8E",
-          "highlight": false,
+          "highlight": true,
           "lat": 34.6687,
           "lng": 135.501,
           "tags": [
@@ -1164,6 +1164,13 @@
       "stopRef": "day:day1:2",
       "stopName": "關西國際機場 T2",
       "titleManual": true
+    },
+    {
+      "url": "http://booking.com/hotel/jp/bian-nahoterujing-du-ba-tiao-kou-yi-qian.zh-tw.html?label=gog235jc-10CAEoggI46AdIMFgDaOcBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuAL4zPPOBsACAdICJDMzOTkyY2EwLTc3MjItNDYxOC1hOGNlLTNiY2E2Y2E1YzY4MtgCAeACAQ-Share-BsOQ2V%401776091791&sid=07eba64fb2983410679c0dfac0778b30&aid=397594&ucfs=1&arphpl=1&checkin=2026-05-17&checkout=2026-05-18&dest_id=-235402&dest_type=city&group_adults=6&req_adults=6&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=793c6744fbff0234&srepoch=1777473676&all_sr_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&highlighted_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&matching_block_id=461167303_140639593_2_2_0&sr_pri_blocks=461167303_140639593_2_2_0__2207450%2C461167314_140639593_2_2_0__2207450%2C461167317_238087352_2_2_0__2635000&from=searchresults",
+      "title": "",
+      "source": "auto",
+      "stopRef": "day:day1:4",
+      "stopName": "京都海茵娜飯店 Check-in"
     },
     {
       "url": "https://tabelog.com/tw/kyoto/A2601/A260301/26041607/",
