@@ -3724,19 +3724,29 @@ async function loadInitial(){
   await loadDefaultJson();
 }
 
+// 預設 trip.json 來源：寫死指向 GitHub jp2026 分支的 raw 檔
+// 這樣不管在哪個網域、本機 file:// 或其他 origin 打開，都能讀到最新內容
+const DEFAULT_TRIP_URL = 'https://raw.githubusercontent.com/eithwa/travel-notes/jp2026/trip.json';
+
 async function loadDefaultJson(){
-  try{
-    const url = new URL('trip.json', document.baseURI).href;
-    const res = await fetch(url, {cache:'no-store'});
-    if(!res.ok) throw new Error('Failed: ' + res.status);
-    const parsed = await res.json();
-    setData(parsed);
-    setStatus('目前使用預設 trip.json');
-  }catch(err){
-    console.error(err);
-    const isFile = window.location.protocol === 'file:';
-    setStatus(isFile ? '請用 GitHub Pages 或本機 HTTP server' : '預設 trip.json 載入失敗');
+  // 依序嘗試：同 origin 的相對路徑（部署在 jp2026 時最快） → GitHub raw（保底，全球可用）
+  const candidates = [];
+  try{ candidates.push(new URL('trip.json', document.baseURI).href); }catch(e){}
+  if(!candidates.includes(DEFAULT_TRIP_URL)) candidates.push(DEFAULT_TRIP_URL);
+
+  for(const url of candidates){
+    try{
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const parsed = await res.json();
+      setData(parsed);
+      setStatus(url === DEFAULT_TRIP_URL ? '目前使用 GitHub jp2026 的 trip.json' : '目前使用預設 trip.json');
+      return;
+    }catch(err){
+      console.warn('載入 ' + url + ' 失敗：', err);
+    }
   }
+  setStatus('預設 trip.json 載入失敗（請檢查網路連線）');
 }
 
 async function loadJsonFile(file){
