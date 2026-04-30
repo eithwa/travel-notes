@@ -455,15 +455,44 @@ function uid(){return 'u' + Math.random().toString(36).slice(2,9);}
 function setStatus(t){ const el = $('#loadStatus'); if(el) el.textContent = t; }
 
 // markdown 渲染（含 sanitize fallback）
+// 所有 <a> 都加上 target="_blank" rel="noopener noreferrer"，避免在當前分頁跳走
 function renderMd(text){
   if(!nonEmpty(text)) return '';
+  let html = '';
   if(typeof marked !== 'undefined'){
     try{
-      const html = marked.parse(String(text), {breaks:true, gfm:true});
-      return (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(html) : html;
-    }catch(e){}
+      html = marked.parse(String(text), {breaks:true, gfm:true});
+      if(typeof DOMPurify !== 'undefined') html = DOMPurify.sanitize(html);
+    }catch(e){
+      html = escapeHtml(text).replace(/\n/g,'<br>');
+    }
+  } else {
+    html = escapeHtml(text).replace(/\n/g,'<br>');
   }
-  return escapeHtml(text).replace(/\n/g,'<br>');
+  return forceLinksNewTab(html);
+}
+
+// 為 HTML 內所有 <a> 加上 target="_blank" 與 rel="noopener noreferrer"
+function forceLinksNewTab(html){
+  return String(html).replace(/<a\b([^>]*)>/gi, (m, attrs) => {
+    let a = attrs;
+    if(/\btarget\s*=/.test(a)){
+      a = a.replace(/\btarget\s*=\s*("[^"]*"|'[^']*'|\S+)/i, 'target="_blank"');
+    } else {
+      a += ' target="_blank"';
+    }
+    if(/\brel\s*=/.test(a)){
+      a = a.replace(/\brel\s*=\s*("([^"]*)"|'([^']*)'|(\S+))/i, (mm, _q, dq, sq, bare) => {
+        const cur = (dq || sq || bare || '').toLowerCase();
+        const need = ['noopener','noreferrer'].filter(k => !cur.includes(k));
+        const merged = (cur + (need.length ? ' ' + need.join(' ') : '')).trim();
+        return `rel="${merged}"`;
+      });
+    } else {
+      a += ' rel="noopener noreferrer"';
+    }
+    return `<a${a}>`;
+  });
 }
 
 function embedUrl(url){

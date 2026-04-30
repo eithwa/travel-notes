@@ -1167,10 +1167,11 @@
     },
     {
       "url": "http://booking.com/hotel/jp/bian-nahoterujing-du-ba-tiao-kou-yi-qian.zh-tw.html?label=gog235jc-10CAEoggI46AdIMFgDaOcBiAEBmAEzuAEXyAEM2AED6AEB-AEBiAIBqAIBuAL4zPPOBsACAdICJDMzOTkyY2EwLTc3MjItNDYxOC1hOGNlLTNiY2E2Y2E1YzY4MtgCAeACAQ-Share-BsOQ2V%401776091791&sid=07eba64fb2983410679c0dfac0778b30&aid=397594&ucfs=1&arphpl=1&checkin=2026-05-17&checkout=2026-05-18&dest_id=-235402&dest_type=city&group_adults=6&req_adults=6&no_rooms=1&group_children=0&req_children=0&hpos=1&hapos=1&sr_order=popularity&srpvid=793c6744fbff0234&srepoch=1777473676&all_sr_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&highlighted_blocks=461167303_140639593_2_2_0%2C461167314_140639593_2_2_0%2C461167317_238087352_2_2_0&matching_block_id=461167303_140639593_2_2_0&sr_pri_blocks=461167303_140639593_2_2_0__2207450%2C461167314_140639593_2_2_0__2207450%2C461167317_238087352_2_2_0__2635000&from=searchresults",
-      "title": "",
+      "title": "booking海茵那飯店",
       "source": "auto",
       "stopRef": "day:day1:4",
-      "stopName": "京都海茵娜飯店 Check-in"
+      "stopName": "京都海茵娜飯店 Check-in",
+      "titleManual": true
     },
     {
       "url": "https://tabelog.com/tw/kyoto/A2601/A260301/26041607/",
