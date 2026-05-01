@@ -882,7 +882,9 @@
           "stay": "",
           "cost": "",
           "address": "",
-          "tags": [],
+          "tags": [
+            "購物"
+          ],
           "note": "",
           "next": "",
           "map": "",
@@ -977,7 +979,9 @@
           "stay": "",
           "cost": "",
           "address": "",
-          "tags": [],
+          "tags": [
+            "購物"
+          ],
           "note": "",
           "next": "",
           "map": "",
