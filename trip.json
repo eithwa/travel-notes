@@ -617,7 +617,7 @@
           "lng": 135.7844389
         },
         {
-          "time": "11:00-12:00",
+          "time": "11:00-13:30",
           "name": "三年坂 → 二年坂 → 午餐",
           "maps_label": "Sannenzaka",
           "stay": "30分",
@@ -633,24 +633,6 @@
           "address": "京都市東山區清水2丁目211",
           "lat": 34.994303,
           "lng": 135.7844389
-        },
-        {
-          "time": "12:00-13:30",
-          "name": "午餐 鮨麻布 東山",
-          "maps_label": "鮨麻布 東山",
-          "short_address": "Kyoto",
-          "stay": "",
-          "cost": "約 NT$2600 / 人",
-          "address": "京都市東山區八坂上町366",
-          "note": "主打職人手握江戶前壽司，結合精緻食材與靜謐氛圍，呈現高質感的京都壽司體驗。\n[Tabelog介紹](https://tabelog.com/tw/kyoto/A2601/A260301/26041607/)",
-          "next": "",
-          "map": "https://maps.google.com/?q=Sushi%20Azabu%20Higashiyama%2C%20Japan%2C%20%E3%80%92605-0824%20Kyoto%2C%20Higashiyama%20Ward%2C%20Yasaka%20Kamimachi%2C%20%EF%BC%93%EF%BC%96%EF%BC%96%20%E5%86%85%20THE%20SODOH%20HIGASHIYAMA%20KYOTO",
-          "highlight": true,
-          "tags": [
-            "美食"
-          ],
-          "lat": 35.0023302,
-          "lng": 135.776457
         },
         {
           "time": "13:30–13:30",
@@ -707,22 +689,23 @@
           ]
         },
         {
-          "time": "18:00–20:30",
-          "name": "晚餐 燒肉弘 先斗町店",
-          "maps_label": "河原町晚餐",
-          "short_address": "河原町",
-          "stay": "90 分",
-          "cost": "約 NT$2200 / 人",
-          "address": "京都市中京區材木町176-1",
-          "note": "主打鴨川旁先斗町氛圍，邊享用黑毛和牛燒肉邊感受京都夜景，適合想要氣氛與用餐體驗兼具的選擇。",
-          "next": "友都八喜",
-          "map": "https://maps.google.com/?q=Kyo-Yakiniku%20HIRO%20Pontocho%20Annex%20-%20Kyoto%20Wagyu%20Beef%20Restaurant%20-%2C%20176-1%20Zaimokucho%2C%20Nakagyo%20Ward%2C%20Kyoto%2C%20604-8017%2C%20Japan",
-          "highlight": true,
-          "lat": 35.0036,
-          "lng": 135.7682,
+          "time": "18:00-20:30",
+          "name": "京極商店街",
+          "maps_label": "Kyoto Shinkyogoku Shopping St",
+          "short_address": "Kyoto",
+          "stay": "",
+          "cost": "",
+          "address": "Japan, 〒604-8035 Kyoto, Nakagyo Ward, Sakuranocho, 438-1 3F",
           "tags": [
-            "美食"
-          ]
+            "購物",
+            "景點"
+          ],
+          "note": "可以邊逛邊解決晚餐",
+          "next": "",
+          "map": "https://maps.google.com/?q=Kyoto%20Shinkyogoku%20Shopping%20St",
+          "highlight": false,
+          "lat": 35.0062512,
+          "lng": 135.7672058
         },
         {
           "time": "20:30–21:30",
@@ -744,21 +727,19 @@
         },
         {
           "time": "21:30–23:30",
-          "name": "鳥貴族（居酒屋）",
+          "name": "鳥貴族 京都七條店",
           "maps_label": "鳥貴族",
-          "short_address": "四条河原町",
           "stay": "90 分",
           "cost": "全品 370 円 (NT$74)",
-          "address": "京都市下京區橋本町109",
           "note": "全品均一價串燒居酒屋，Day 2 完美收尾。",
           "next": "回飯店",
-          "map": "https://maps.google.com/?q=YAKITORI%20Torikizoku%20Shijo%20Kawaramachi%20Store%2C%20Japan%2C%20%E3%80%92600-8011%20Kyoto%2C%20Shimogyo%20Ward%2C%20Hashimotocho%2C%20109",
+          "map": "https://maps.google.com/?q=YAKITORI%20Torikizoku%20Kyoto%20Shichijo%20Store%2C%20Japan%2C%20%E3%80%92600-8217%20Kyoto%2C%20Shimogyo%20Ward%2C%20Higashisakaicho%2C%20191%20%E3%82%B0%E3%83%A9%E3%83%B4%E3%82%A3%20%EF%BC%96%E9%9A%8E",
           "highlight": false,
           "tags": [
             "夜生活"
           ],
-          "lat": 35.00376,
-          "lng": 135.770747
+          "lat": 34.9893757,
+          "lng": 135.7548398
         }
       ]
     },
@@ -840,8 +821,8 @@
           "lng": 135.5025905
         },
         {
-          "time": "14:00–18:00",
-          "name": "固力果跑者 + 寶可夢中心 心齋橋 + 心齋橋逛街",
+          "time": "14:00–17:00",
+          "name": "固力果跑者 + 寶可夢中心",
           "maps_label": "Pokémon Center Osaka DX",
           "short_address": "心齋橋",
           "stay": "180 分",
@@ -850,12 +831,30 @@
           "note": "固力果招牌 → 寶可夢中心 → 心齋橋筋商店街一條龍。",
           "next": "晚餐",
           "map": "https://maps.google.com/?q=34.6726,135.5012",
-          "highlight": true,
+          "highlight": false,
           "lat": 34.6726,
           "lng": 135.5012,
           "tags": [
             "購物"
           ]
+        },
+        {
+          "time": "17:00-18:00",
+          "name": "道頓堀水上觀光船",
+          "maps_label": "Tombori River Cruise (Tazaemon Bridge Pier)",
+          "short_address": "大阪府大阪市中央區",
+          "stay": "",
+          "cost": "NT$425 / 人",
+          "address": "大阪府大阪市中央區宗右衛門町7-13",
+          "tags": [
+            "景點"
+          ],
+          "note": "搭乘觀光船沿道頓堀河遊覽，近距離欣賞固力果跑跑人等招牌夜景，輕鬆體驗大阪熱鬧氛圍。",
+          "next": "",
+          "map": "https://maps.google.com/?q=Tombori%20River%20Cruise%20(Tazaemon%20Bridge%20Pier)%2C%207-13%20Souemoncho%2C%20Chuo%20Ward%2C%20Osaka%2C%20542-0084%2C%20Japan",
+          "highlight": true,
+          "lat": 34.669554,
+          "lng": 135.504727
         },
         {
           "time": "18:00–20:00",
@@ -877,21 +876,17 @@
         },
         {
           "time": "20:00-21:30",
-          "name": "梅田空中庭園",
-          "maps_label": "Kuchu Teien Observatory",
-          "short_address": "Osaka",
+          "name": "心齋橋逛街",
+          "maps_label": "",
+          "short_address": "",
           "stay": "",
           "cost": "",
-          "address": "大阪市北區大淀中1丁目1-88 梅田空中庭園大樓（梅田藍天大廈）",
-          "note": "大阪市區經典高空景觀台，360度視野搭配日落與夜景最值得。\n\n+ 計程車：約 10–15 分",
+          "address": "",
+          "tags": [],
+          "note": "",
           "next": "",
-          "map": "https://maps.google.com/?q=Kuchu%20Teien%20Observatory%2C%20Japan%2C%20%E3%80%92531-6039%20Osaka%2C%20Kita%20Ward%2C%20Oyodonaka%2C%201%20Chome%E2%88%921%E2%88%9288%20%E6%A2%85%E7%94%B0%E3%82%B9%E3%82%AB%E3%82%A4%E3%83%93%E3%83%AB",
-          "highlight": false,
-          "tags": [
-            "景點"
-          ],
-          "lat": 34.7052927,
-          "lng": 135.4905349
+          "map": "",
+          "highlight": false
         },
         {
           "time": "21:30-22:30",
@@ -946,7 +941,7 @@
           "stay": "120 分",
           "cost": "1,000 円",
           "address": "大阪市浪速區惠美須東 1-18-6",
-          "note": "新世界商店街可順便買串炸當早午餐。\n大阪最在地的復古街區，邊逛邊吃串炸、體驗庶民風情。\n+ 搭→ 大阪地鐵御堂筋線\n+ 梅田 → 動物園前（約 15 分）\n+ 走路 5 分鐘到通天閣",
+          "note": "新世界商店街可順便買串炸當早午餐。\n大阪最在地的復古街區，邊逛邊吃串炸、體驗庶民風情。\n+ 搭→ 大阪地鐵御堂筋線\n+ 梅田 → 動物園前（約 15 分）\n+ 走路 5 分鐘到通天閣\n+ [Joshin Super Kids Land Main Store](https://www.instagram.com/reels/DXMWTbRgkVk/)模型店在附近",
           "next": "藍色雙塔",
           "map": "https://maps.google.com/?q=Tsutenkaku%2C%201%20Chome-18-6%20Ebisuhigashi%2C%20Naniwa%20Ward%2C%20Osaka%2C%20556-0002%2C%20Japan",
           "highlight": true,
@@ -975,22 +970,18 @@
           "lng": 135.4970875
         },
         {
-          "time": "12:00–14:00",
-          "name": "敘敘院 梅田店",
-          "maps_label": "敘敘院 梅田店",
-          "short_address": "梅田",
-          "stay": "120 分",
-          "cost": "約 NT$1500 / 人",
-          "address": "大阪市北區梅田3丁目1-3 LUCUA 大阪10樓",
-          "note": "+ 敘敘苑 梅田店：日本知名高級燒肉品牌，主打高品質和牛與舒適用餐環境，適合悠閒享受一餐。\n+ 吃完可以周邊逛逛(1小時左右自由活動)回飯店拿行李 → 出發難波(15:30)。",
-          "next": "晚餐",
-          "map": "https://maps.google.com/?q=Jojoen%20LUCUA%20Osaka%2C%20Japan%2C%20%E3%80%92530-0001%20Osaka%2C%20Kita%20Ward%2C%20Umeda%2C%203%20Chome%E2%88%921%E2%88%923%20%E3%83%AB%E3%82%AF%E3%82%A2%2010F",
-          "highlight": true,
-          "tags": [
-            "美食"
-          ],
-          "lat": 34.7052911,
-          "lng": 135.4983887
+          "time": "12:00-14:00",
+          "name": "附近逛逛 + 吃午餐",
+          "maps_label": "",
+          "short_address": "",
+          "stay": "",
+          "cost": "",
+          "address": "",
+          "tags": [],
+          "note": "",
+          "next": "",
+          "map": "",
+          "highlight": false
         },
         {
           "time": "14:00-15:00",
@@ -1200,19 +1191,19 @@
       "titleManual": true
     },
     {
-      "url": "https://tabelog.com/tw/kyoto/A2601/A260301/26041607/",
-      "title": "鮨麻布 東山 - 祇園四條/壽司 | Tabelog",
-      "source": "auto",
-      "stopRef": "day:day2:4",
-      "stopName": "午餐 鮨麻布 東山"
-    },
-    {
       "url": "https://www.booking.com/hotel/jp/granvia-osaka.zh-tw.html?aid=1288258&label=metagha-link-MRTW-hotel-241706_dev-desktop_los-1_bw-32_dow-Sunday_defdate-0_room-0_gstadt-2_rateid-tw_aud-9181518022_gacid-21404718441_mcid-10_ppa-0_clrid-0_ad-1_gstkid-0_checkin-20260517_ppt-G_lp-2158_r-14320554018054943261&sid=07eba64fb2983410679c0dfac0778b30&all_sr_blocks=24170796_374012663_2_2_0&checkin=2026-05-17&checkout=2026-05-18&dest_id=241706&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=24170796_374012663_2_2_0&hpos=1&matching_block_id=24170796_374012663_2_2_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=24170796_374012663_2_2_0__2365200&srepoch=1776181763&srpvid=03ce6f3a36b10538&type=total&ucfs=1&",
       "title": "booking Hotel Granvia Osaka-JR Hotel Group",
       "source": "auto",
       "stopRef": "day:day3:1",
       "stopName": "大阪格蘭比亞酒店 Check-in",
       "titleManual": true
+    },
+    {
+      "url": "https://www.instagram.com/reels/DXMWTbRgkVk/",
+      "title": "我不喝拿鐵 on Instagram: \"日本大阪必逛模型玩具店\nJoshin Super Kids Land Main Store \nスーパーキッズランド本店\n#日本 #大阪ディナー  #玩具店 #模型推薦 #玩具人必逛\"",
+      "source": "auto",
+      "stopRef": "day:day4:0",
+      "stopName": "通天閣 + 新世界市場"
     }
   ],
   "favorites": {
