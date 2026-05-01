@@ -350,7 +350,8 @@ body.edit-mode .ref-url{display:block}
 
   /* bottom sheet 區塊（max-height 對齊 JS 的 full snap：留 20px 頂端給地圖；min-height 保證 sub-tabs 看得到） */
   /* z-index 必須 > Leaflet 內部的 .leaflet-control-container（預設 1000），否則 leaflet 控制元件會蓋住 sheet */
-  #panel-map .map-side{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.18);z-index:1500;display:flex;flex-direction:column;overflow:hidden;height:42%;max-height:calc(100% - 20px);min-height:96px;transition:height .28s cubic-bezier(.4,0,.2,1)}
+  /* touch-action:none 讓 sheet 上方拖曳區（handle + sub-tabs）由 JS 完全接管，不會被瀏覽器當成滾動 */
+  #panel-map .map-side{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -8px 24px rgba(0,0,0,.18);z-index:1500;display:flex;flex-direction:column;overflow:hidden;height:42%;max-height:calc(100% - 20px);min-height:96px;transition:height .28s cubic-bezier(.4,0,.2,1);touch-action:none}
   #panel-map .map-side.dragging{transition:none}
 
   /* drag handle 小橫槓區（手機版才出現） */
@@ -4295,8 +4296,12 @@ loadInitial();
   MQ.addEventListener('change', applyLayout);
 
   // ---- Bottom sheet 三段拖曳吸附（折疊 / 半屏 / 全屏） ----
+  // 拖曳感應區 = 整個 sheet，但排除「內容滾動區」(mapSubContent)，
+  // 這樣 handle + sub-tabs 那一整塊都可以拖（類似 Google Maps），
+  // 滾動內容時也不會誤觸拖曳。
   const sheet = document.getElementById('mapSide');
   const handle = document.getElementById('sheetHandle');
+  const subContent = document.getElementById('mapSubContent');
   if(sheet && handle){
     const SNAPS = ['collapsed', 'half', 'full'];
     function snapHeights(){
@@ -4304,7 +4309,6 @@ loadInitial();
       const headerH = 56;
       const available = winH - headerH;
       // collapsed 要保留 handle (22) + sub-tabs (~46) + 一些下緣空間 = 約 96px
-      // 這樣 sub-tabs 完整露出、可以方便點擊
       return {
         collapsed: 96,
         half: Math.round(available * 0.42),
@@ -4331,19 +4335,40 @@ loadInitial();
       }
       return best;
     }
+    function nextSnap(s){
+      const i = SNAPS.indexOf(s);
+      return SNAPS[(i + 1) % SNAPS.length];
+    }
+    // 判斷此事件 target 是否落在「可拖曳區域」(handle + sub-tabs 列等)，
+    // 不在 mapSubContent 滾動區內就算可拖
+    function inDraggable(target){
+      if(!target) return false;
+      if(subContent && subContent.contains(target)) return false;
+      return sheet.contains(target);
+    }
 
-    let startY = 0, startH = 0, dragging = false, moved = false;
-    function onStart(y){
+    const DRAG_THRESHOLD = 6; // 移動超過 6px 才當作拖曳，避免誤觸
+    let startY = 0, startH = 0, dragging = false, moved = false, startTarget = null;
+    let suppressClick = false;
+
+    function onStart(target, y){
       if(!MQ.matches) return;
+      if(!inDraggable(target)) return;
       dragging = true; moved = false;
       startY = y;
       startH = sheet.getBoundingClientRect().height;
-      sheet.classList.add('dragging');
+      startTarget = target;
+      // 不立刻加 dragging class，等真正移動才加，避免影響短按
     }
-    function onMove(y){
+    function onMove(y, ev){
       if(!dragging) return;
       const delta = startY - y;
-      if(Math.abs(delta) > 3) moved = true;
+      if(!moved && Math.abs(delta) > DRAG_THRESHOLD){
+        moved = true;
+        sheet.classList.add('dragging');
+      }
+      if(!moved) return;
+      ev && ev.preventDefault && ev.preventDefault();
       const heights = snapHeights();
       const newH = Math.max(heights.collapsed, Math.min(heights.full, startH + delta));
       sheet.style.height = newH + 'px';
@@ -4352,25 +4377,45 @@ loadInitial();
       if(!dragging) return;
       dragging = false;
       sheet.classList.remove('dragging');
-      const h = sheet.getBoundingClientRect().height;
-      applySnap(moved ? nearestSnap(h) : nextSnap(currentSnap));
-    }
-    function nextSnap(s){
-      const i = SNAPS.indexOf(s);
-      return SNAPS[(i + 1) % SNAPS.length];
+      if(moved){
+        const h = sheet.getBoundingClientRect().height;
+        applySnap(nearestSnap(h));
+        // 阻止隨後的 click 事件觸發 sub-tab 切換等
+        suppressClick = true;
+        setTimeout(() => { suppressClick = false; }, 80);
+      } else {
+        // 沒移動 → 點擊在 handle 區的話切下一段，其它位置讓 click 正常傳播
+        if(startTarget && handle.contains(startTarget)){
+          applySnap(nextSnap(currentSnap));
+        }
+      }
+      startTarget = null;
     }
 
     // 觸控
-    handle.addEventListener('touchstart', e => onStart(e.touches[0].clientY), { passive:true });
-    handle.addEventListener('touchmove', e => { onMove(e.touches[0].clientY); e.preventDefault(); }, { passive:false });
-    handle.addEventListener('touchend', onEnd);
-    handle.addEventListener('touchcancel', onEnd);
-    // 滑鼠（方便桌面瀏覽器模擬手機時測試）
-    handle.addEventListener('mousedown', e => { onStart(e.clientY); e.preventDefault(); });
-    document.addEventListener('mousemove', e => onMove(e.clientY));
+    sheet.addEventListener('touchstart', e => {
+      onStart(e.target, e.touches[0].clientY);
+    }, { passive: true });
+    sheet.addEventListener('touchmove', e => onMove(e.touches[0].clientY, e), { passive: false });
+    sheet.addEventListener('touchend', onEnd);
+    sheet.addEventListener('touchcancel', onEnd);
+    // 滑鼠（桌面 DevTools 模擬手機時測試用）
+    sheet.addEventListener('mousedown', e => {
+      if(!inDraggable(e.target)) return;
+      onStart(e.target, e.clientY);
+    });
+    document.addEventListener('mousemove', e => onMove(e.clientY, e));
     document.addEventListener('mouseup', onEnd);
 
-    // 視窗尺寸變化時重新套用 snap（避免直立/橫躺後高度不對）
+    // 拖曳結束後的 click 要被阻止，否則會誤觸發 sub-tab、卡片等
+    sheet.addEventListener('click', e => {
+      if(suppressClick){
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    // 視窗尺寸變化時重新套用 snap
     window.addEventListener('resize', () => {
       if(MQ.matches) applySnap(currentSnap);
     });
