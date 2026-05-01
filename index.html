@@ -1307,8 +1307,10 @@ function setMapMode(mode){
   }
 }
 
-function makeNumberedMarker(num, total){
-  const cls = num === 1 ? ' first' : (num === total ? ' last' : '');
+// num 是顯示在 marker 上的編號（不一定連續：跳過沒座標的 stop 後仍對應原始本日行程編號）
+// isFirst / isLast 控制顏色（綠=起點、紫=終點）
+function makeNumberedMarker(num, isFirst, isLast){
+  const cls = isFirst ? ' first' : (isLast ? ' last' : '');
   return L.divIcon({
     className: 'leaflet-div-icon',
     html: `<div class="num-marker${cls}"><span>${num}</span></div>`,
@@ -1353,8 +1355,12 @@ function showStopsOnLeaflet(stops, day){
   const points = [];
   validStops.forEach((v, i) => {
     const { stop, idx, ll } = v;
-    const num = i + 1;
-    const marker = L.marker([ll.lat, ll.lng], { icon: makeNumberedMarker(num, validStops.length) });
+    // 編號用原始 stop 在 day.stops 的 index + 1，這樣跳過沒座標的 stop 之後
+    // 地圖上的編號仍然對應「本日行程」清單裡的編號（不會重新從 1 算）
+    const num = idx + 1;
+    const isFirst = i === 0;
+    const isLast = i === validStops.length - 1;
+    const marker = L.marker([ll.lat, ll.lng], { icon: makeNumberedMarker(num, isFirst, isLast) });
     const mapsLink = nonEmpty(stop.map) ? stop.map : `https://www.google.com/maps?q=${ll.lat},${ll.lng}`;
     marker.bindPopup(`
       <div class="pop-title">${num}. ${escapeHtml(stop.name||'(未命名)')}</div>
@@ -1455,7 +1461,9 @@ function showAllStopsOnMap(day){
   const focus = $('#mapFocus');
 
   // 優先用 Leaflet 顯示多 marker
-  const result = showStopsOnLeaflet(allStops, day);
+  // 傳整個 day.stops（非過濾後）給 showStopsOnLeaflet，讓裡面用原始 idx 編號，
+  // 才能跟「本日行程」清單編號對應上（沒座標的 stop 編號會被跳過）
+  const result = showStopsOnLeaflet(day.stops || [], day);
   let extraNote = '';
   if(!result.ok){
     // Leaflet 載入失敗 → fallback 到 Google Maps directions iframe
@@ -3986,10 +3994,14 @@ function showFavoritesOnMainMap(){
 
   const points = [];
   const markerMap = new Map();
-  fav.places.forEach((p, i) => {
-    if(!(p.lat && p.lng)) return;
+  // 收藏夾：用原始 fav.places 的順序當編號（跳過沒座標的也保留編號跳號），
+  // first/last 視覺：第一/最後 *有座標* 的 marker
+  const favValid = fav.places.map((p, i) => ({ p, i })).filter(x => x.p.lat && x.p.lng);
+  favValid.forEach(({ p, i }, vi) => {
     const num = i + 1;
-    const marker = L.marker([p.lat, p.lng], { icon: makeNumberedMarker(num, fav.places.length) });
+    const isFirst = vi === 0;
+    const isLast = vi === favValid.length - 1;
+    const marker = L.marker([p.lat, p.lng], { icon: makeNumberedMarker(num, isFirst, isLast) });
     const gmapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(p.name)}/@${p.lat},${p.lng},17z`;
     marker.bindPopup(`
       <div class="pop-title">${num}. ${escapeHtml(p.name)}</div>
