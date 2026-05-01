@@ -238,6 +238,9 @@ table.schedule{border-collapse:collapse;width:100%;font-size:13px;table-layout:f
 .ref-add input{flex:1;min-width:240px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;background:#fff}
 .ref-add input.ref-title-input{flex:0 1 260px;min-width:180px}
 .ref-hint{margin-top:8px;padding:0 4px;color:var(--muted);font-size:12px;line-height:1.5}
+/* 平常瀏覽看不到「加入」區塊跟提示，只有開啟編輯模式才顯示 */
+body:not(.edit-mode) .ref-add,
+body:not(.edit-mode) .ref-hint{display:none !important}
 .ref-source{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.5px}
 .ref-source.manual{background:#dcfce7;color:#166534}
 .ref-source.auto{background:#dbeafe;color:#1e40af}
